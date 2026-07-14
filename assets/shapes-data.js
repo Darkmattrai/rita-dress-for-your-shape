@@ -15,10 +15,10 @@ window.SHAPES = {
     proportions: [33, 19, 33],
     summary: "Your shoulders and hips mirror each other and your waist nips in on its own — the most balanced of the five shapes. Dressing it is simply about letting that waist show.",
     wear: [
-      ["Neckline", "A deep V-neck or sweetheart that follows your balance", "v-neck"],
-      ["Top", "A wrap top that ties in at your natural waist", "wrap-top"],
-      ["Dress", "A belted wrap dress — practically made for you", "wrap-dress"],
-      ["Denim", "Straight-leg or bootcut jeans that skim your curves", "straight-jeans"]
+      ["Neckline", "A deep V-neck or sweetheart that follows your balance", "v-neck", "necklines"],
+      ["Top", "A wrap top that ties in at your natural waist", "wrap-top", "shirts"],
+      ["Dress", "A belted wrap dress — practically made for you", "wrap-dress", "dresses"],
+      ["Denim", "Straight-leg or bootcut jeans that skim your curves", "straight-jeans", "jeans"]
     ],
     avoid: [
       "Boxy, oversized shapes that swallow your waist",
@@ -34,10 +34,10 @@ window.SHAPES = {
     proportions: [28, 25, 28],
     summary: "Your shoulders, waist and hips run in a smooth, even line. The magic is in creating curves — building shape and the illusion of a waist with texture and volume.",
     wear: [
-      ["Neckline", "A scoop or sweetheart that widens the top half", "sweetheart"],
-      ["Top", "A peplum or ruched top that carves out a waist", "peplum-top"],
-      ["Jacket", "A cropped jacket with peplum or volume", "cropped-jacket"],
-      ["Denim", "Textured or patterned trousers that add dimension", "straight-jeans"]
+      ["Neckline", "A scoop or sweetheart that widens the top half", "sweetheart", "necklines"],
+      ["Top", "A peplum or ruched top that carves out a waist", "peplum-top", "shirts"],
+      ["Jacket", "A cropped jacket with peplum or volume", "cropped-jacket", "jackets"],
+      ["Denim", "Textured or patterned trousers that add dimension", "straight-jeans", "jeans"]
     ],
     avoid: [
       "Plain, streamlined cuts with no shaping",
@@ -53,10 +53,10 @@ window.SHAPES = {
     proportions: [25, 35, 27],
     summary: "You carry softness through the middle, often with a lovely bust and great legs. The goal is to lengthen the torso and keep the eye travelling up and down.",
     wear: [
-      ["Neckline", "A long V-neck that draws the eye upward", "v-neck"],
-      ["Top", "A fitted top with vertical seams or details", "fitted-top"],
-      ["Outerwear", "A longer, structured jacket for clean vertical lines", "long-jacket"],
-      ["Denim", "Straight-leg or tapered trousers in a dark wash", "straight-jeans"]
+      ["Neckline", "A long V-neck that draws the eye upward", "v-neck", "necklines"],
+      ["Top", "A fitted top with vertical seams or details", "fitted-top", "shirts"],
+      ["Outerwear", "A longer, structured jacket for clean vertical lines", "long-jacket", "coats"],
+      ["Denim", "Straight-leg or tapered trousers in a dark wash", "straight-jeans", "jeans"]
     ],
     avoid: [
       "Clingy fabrics that cut across the middle",
@@ -72,10 +72,10 @@ window.SHAPES = {
     proportions: [37, 24, 21],
     summary: "Your shoulders and bust are broader than your hips. Dressing it is about softening those strong shoulders and adding a little interest and volume to the lower half.",
     wear: [
-      ["Neckline", "A V-neck that narrows and softens the shoulder line", "v-neck"],
-      ["Sleeve", "A fitted, tapered sleeve — no volume up top", "tapered-sleeve"],
-      ["Bottom", "Wide-leg or flared trousers that build the lower half", "wide-trousers"],
-      ["Skirt", "An A-line skirt that adds gentle hip volume", "a-line-skirt"]
+      ["Neckline", "A V-neck that narrows and softens the shoulder line", "v-neck", "necklines"],
+      ["Sleeve", "A fitted, tapered sleeve — no volume up top", "tapered-sleeve", "sleeves"],
+      ["Bottom", "Wide-leg or flared trousers that build the lower half", "wide-trousers", "trousers"],
+      ["Skirt", "An A-line skirt that adds gentle hip volume", "a-line-skirt", "skirts"]
     ],
     avoid: [
       "Broad boat necks and voluminous puff sleeves",
@@ -91,10 +91,10 @@ window.SHAPES = {
     proportions: [22, 24, 38],
     summary: "Your hips and thighs are fuller than your shoulders and bust. The goal is to draw the eye upward and let your top half catch up with your lovely lower half.",
     wear: [
-      ["Neckline", "A wide boat or off-shoulder neckline to broaden the top", "boat-neck"],
-      ["Sleeve", "A structured or statement sleeve that builds the shoulders", "puff-sleeve"],
-      ["Top", "A lighter, brighter top with detail up high", "fitted-top"],
-      ["Denim", "A dark straight-leg or bootcut in a deeper tone", "straight-jeans"]
+      ["Neckline", "A wide boat or off-shoulder neckline to broaden the top", "boat-neck", "necklines"],
+      ["Sleeve", "A structured or statement sleeve that builds the shoulders", "puff-sleeve", "sleeves"],
+      ["Top", "A lighter, brighter top with detail up high", "fitted-top", "shirts"],
+      ["Denim", "A dark straight-leg or bootcut in a deeper tone", "straight-jeans", "jeans"]
     ],
     avoid: [
       "Tight, pale or patterned bottoms that spotlight the hips",

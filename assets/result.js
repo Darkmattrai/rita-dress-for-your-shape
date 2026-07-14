@@ -1,9 +1,9 @@
 /* ────────────────────────────────────────────────────────────────────────
    Result page renderer. Each result page carries <body data-shape="pear">;
    this builds the personalised result from shapes-data.js + garments.js,
-   fires tracking, and wires the $47 checkout buttons. Needs config.js,
-   analytics.js, shapes-data.js, garments.js loaded first, and
-   a <div id="result-root"></div>.
+   shows Rita's per-category style cheat sheets (images/), fires tracking, and
+   wires the $47 checkout buttons. Needs config.js, analytics.js,
+   shapes-data.js, garments.js loaded first, and <div id="result-root"></div>.
    ──────────────────────────────────────────────────────────────────────── */
 (function () {
   var cfg = window.RITA_CONFIG || {};
@@ -12,6 +12,13 @@
   var s = (window.SHAPES || {})[key];
   var root = document.getElementById("result-root");
   if (!s || !root) return;
+
+  // Resolve where sibling assets (images/) live, whether served locally or
+  // from the CDN — derived from this script's own URL.
+  var thisScript = document.currentScript ||
+    (function () { var ss = document.getElementsByTagName("script"); return ss[ss.length - 1]; })();
+  var ASSET_BASE = (thisScript && thisScript.src)
+    ? thisScript.src.replace(/assets\/result\.js(?:\?.*)?$/, "") : "";
 
   function esc(t) {
     return String(t).replace(/[&<>"']/g, function (c) {
@@ -29,29 +36,30 @@
   try { name = (sessionStorage.getItem("rita_name") || "").trim(); } catch (e) {}
   var hi = name ? ", " + esc(name) : "";
 
-  // Proportion bars (shoulders / waist / hips), scaled to a shared max so
-  // shapes read comparably.
-  var PROP_MAX = 40;
-  var propLabels = ["Shoulders", "Waist", "Hips"];
+  // proportion bars
+  var PROP_MAX = 40, propLabels = ["Shoulders", "Waist", "Hips"];
   var bars = (s.proportions || []).map(function (v, i) {
-    var pct = Math.round((v / PROP_MAX) * 100);
     return '<div class="bar-row"><span class="bar-label">' + propLabels[i] + '</span>' +
-      '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%"></span></span></div>';
+      '<span class="bar-track"><span class="bar-fill" style="width:' + Math.round((v / PROP_MAX) * 100) + '%"></span></span></div>';
   }).join("");
 
-  // Wear items, each with its garment illustration.
-  var wear = s.wear.map(function (w) {
-    var g = GARMENTS[w[2]] || "";
-    return '<li><span class="wear-thumb">' + g + '</span>' +
-      '<span class="wear-text"><span class="cat">' + esc(w[0]) + '</span>' +
-      '<span class="item">' + esc(w[1]) + '</span></span></li>';
+  // cheat-sheet cards, one per recommended category, from Rita's blog graphics
+  var sheets = s.wear.map(function (w) {
+    var img = ASSET_BASE + "images/" + key + "-" + w[3] + ".jpg";
+    return '<figure class="sheet">' +
+      '<button type="button" class="sheet-btn" data-full="' + esc(img) + '" data-cap="' + esc(w[0]) + ' — ' + esc(w[1]) + '" aria-label="Enlarge the ' + esc(w[0]) + ' cheat sheet">' +
+        '<img class="sheet-img" src="' + esc(img) + '" alt="' + esc(w[0]) + ' styles for your ' + esc(s.name) + ' shape" loading="lazy" data-flat="' + esc(w[2]) + '">' +
+      '</button>' +
+      '<figcaption><span class="sheet-cat">' + esc(w[0]) + '</span><span class="sheet-tip">' + esc(w[1]) + '</span></figcaption>' +
+    '</figure>';
   }).join("");
+
   var avoid = s.avoid.map(function (a) {
     return '<li><span class="x">' + cross + '</span><span>' + esc(a) + '</span></li>';
   }).join("");
 
   root.innerHTML =
-    // ── hero ──
+    // hero
     '<section class="wrap result-hero">' +
       '<div class="halo"></div>' +
       '<div class="result-ill">' + ill(s.path) + '</div>' +
@@ -60,7 +68,7 @@
       '<p class="result-tagline">' + esc(s.tagline) + '</p>' +
     '</section>' +
 
-    // ── visual "at a glance" summary ──
+    // visual "at a glance"
     '<section class="wrap">' +
       '<div class="glance">' +
         '<div class="glance-goal">' +
@@ -69,34 +77,35 @@
           '<p class="glance-summary">' + esc(s.summary) + '</p>' +
         '</div>' +
         '<div class="glance-bars">' +
-          '<span class="glance-label">Your proportions</span>' +
-          bars +
+          '<span class="glance-label">Your proportions</span>' + bars +
         '</div>' +
       '</div>' +
     '</section>' +
 
-    // ── wear / avoid ──
+    // cheat-sheet gallery
     '<section class="wrap">' +
-      '<div class="result-cols">' +
-        '<div class="result-card">' +
-          '<h2><span class="ic" style="color:var(--color-accent-700)">' + check + '</span>Pieces to start wearing</h2>' +
-          '<ul class="wear-list">' + wear + '</ul>' +
-        '</div>' +
-        '<div class="result-card">' +
-          '<h2><span class="ic">' + cross + '</span>Skip for now</h2>' +
-          '<ul class="avoid-list">' + avoid + '</ul>' +
-        '</div>' +
+      '<span class="kicker" style="margin-bottom:10px">Your ' + esc(s.name) + ' cheat sheets</span>' +
+      '<h2 class="section-h">What to reach for, category by category.</h2>' +
+      '<div class="sheet-grid">' + sheets + '</div>' +
+      '<p class="sheet-note">Tap any sheet to see it full-size. These are four of your categories — the full guide covers every one.</p>' +
+    '</section>' +
+
+    // skip
+    '<section class="wrap">' +
+      '<div class="skip-card">' +
+        '<h3><span class="ic">' + cross + '</span>A few things to skip for now</h3>' +
+        '<ul class="avoid-list">' + avoid + '</ul>' +
       '</div>' +
     '</section>' +
 
-    // ── $47 pitch ──
+    // pitch
     '<section class="wrap">' +
       '<div class="pitch">' +
         '<span class="eyebrow">Your complete ' + esc(s.name) + ' playbook</span>' +
         '<h2>Everything that flatters your ' + esc(s.name) + ' shape, in one guide.</h2>' +
-        '<p>What you just saw is one piece per category. <em>Dressing for Your Shape</em> gives you the whole playbook for your ' + esc(s.name) + ' shape — no more guessing in front of the wardrobe.</p>' +
+        '<p>These sheets are a taste. <em>Dressing for Your Shape</em> gives you the whole playbook for your ' + esc(s.name) + ' shape — no more guessing in front of the wardrobe.</p>' +
         '<ul class="bullets">' +
-          '<li>' + check + '<span>Every category covered — necklines, sleeves, tops, jackets, denim, skirts &amp; dresses</span></li>' +
+          '<li>' + check + '<span>Every category — necklines, sleeves, tops, knitwear, jackets, coats, denim, trousers, skirts &amp; dresses</span></li>' +
           '<li>' + check + '<span>The exact cuts, lengths and shapes that flatter you</span></li>' +
           '<li>' + check + '<span>Your colours and a mix-and-match capsule</span></li>' +
           '<li>' + check + '<span>A ready-to-shop list so you can buy with confidence</span></li>' +
@@ -108,21 +117,14 @@
       '</div>' +
     '</section>' +
 
-    // ── whole-guide mockup ──
+    // whole-guide mockup
     '<section class="wrap mockup-sec">' +
       '<div class="mockup">' +
-        '<div class="mockup-back"></div>' +
-        '<div class="mockup-back mockup-back-2"></div>' +
+        '<div class="mockup-back"></div><div class="mockup-back mockup-back-2"></div>' +
         '<figure class="mockup-cover">' +
           '<span class="mc-kicker">The Complete Guide</span>' +
-          '<div>' +
-            '<h3 class="mc-title">Dressing for<span class="script">Your Shape</span></h3>' +
-            '<span class="mc-rule"></span>' +
-          '</div>' +
-          '<div>' +
-            '<div class="mc-byline">Rita Roumieh</div>' +
-            '<div class="mc-sub">Image &amp; Style</div>' +
-          '</div>' +
+          '<div><h3 class="mc-title">Dressing for<span class="script">Your Shape</span></h3><span class="mc-rule"></span></div>' +
+          '<div><div class="mc-byline">Rita Roumieh</div><div class="mc-sub">Image &amp; Style</div></div>' +
         '</figure>' +
       '</div>' +
       '<div class="mockup-copy">' +
@@ -133,16 +135,43 @@
       '</div>' +
     '</section>' +
 
-    // ── footer ──
+    // footer
     '<footer class="wrap result-foot">' +
-      '<div class="name">Rita Roumieh</div>' +
-      '<div class="sub">Image &amp; Style</div>' +
+      '<div class="name">Rita Roumieh</div><div class="sub">Image &amp; Style</div>' +
       '<a class="retake" href="index.html">← Retake the shape quiz</a>' +
-    '</footer>';
+    '</footer>' +
+
+    // lightbox
+    '<div class="lightbox" id="lightbox" hidden><button type="button" class="lb-close" aria-label="Close">' + cross + '</button><figure class="lb-fig"><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure></div>';
 
   try { document.title = "You’re " + s.article + " " + s.name + " — Dressing for Your Shape"; } catch (e) {}
   if (window.ritaTrack) window.ritaTrack("result_view", { shape: key });
 
+  // image fallback → garment illustration if a sheet fails to load
+  root.querySelectorAll(".sheet-img").forEach(function (img) {
+    img.addEventListener("error", function () {
+      var flat = GARMENTS[img.getAttribute("data-flat")];
+      if (flat) {
+        var frame = img.parentNode;
+        frame.classList.add("sheet-fallback");
+        frame.innerHTML = flat;
+      }
+    });
+  });
+
+  // lightbox
+  var lb = document.getElementById("lightbox"),
+      lbImg = document.getElementById("lb-img"),
+      lbCap = document.getElementById("lb-cap");
+  function openLb(src, cap) { lbImg.src = src; lbImg.alt = cap; lbCap.textContent = cap; lb.hidden = false; document.body.style.overflow = "hidden"; }
+  function closeLb() { lb.hidden = true; lbImg.src = ""; document.body.style.overflow = ""; }
+  root.querySelectorAll(".sheet-btn").forEach(function (b) {
+    b.addEventListener("click", function () { openLb(b.getAttribute("data-full"), b.getAttribute("data-cap")); });
+  });
+  lb.addEventListener("click", function (e) { if (e.target === lb || e.target.closest(".lb-close")) closeLb(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+
+  // checkout
   root.querySelectorAll("[data-buy]").forEach(function (buy) {
     buy.addEventListener("click", function (e) {
       if (window.ritaTrack) window.ritaTrack("checkout_click", { shape: key });
