@@ -1,11 +1,13 @@
 /* ────────────────────────────────────────────────────────────────────────
    Result page renderer. Each result page carries <body data-shape="pear">;
-   this builds the personalised result from shapes-data.js, fires tracking,
-   and wires the $47 checkout button. Needs config.js, analytics.js,
-   shapes-data.js loaded first, and a <div id="result-root"></div>.
+   this builds the personalised result from shapes-data.js + garments.js,
+   fires tracking, and wires the $47 checkout buttons. Needs config.js,
+   analytics.js, shapes-data.js, garments.js loaded first, and
+   a <div id="result-root"></div>.
    ──────────────────────────────────────────────────────────────────────── */
 (function () {
   var cfg = window.RITA_CONFIG || {};
+  var GARMENTS = window.GARMENTS || {};
   var key = document.body.getAttribute("data-shape");
   var s = (window.SHAPES || {})[key];
   var root = document.getElementById("result-root");
@@ -27,28 +29,57 @@
   try { name = (sessionStorage.getItem("rita_name") || "").trim(); } catch (e) {}
   var hi = name ? ", " + esc(name) : "";
 
-  var wear = s.wear.map(function (w, i) {
-    return '<li><span class="num">' + (i + 1) + '</span><span><span class="cat">' + esc(w[0]) +
-      '</span><span class="item">' + esc(w[1]) + '</span></span></li>';
+  // Proportion bars (shoulders / waist / hips), scaled to a shared max so
+  // shapes read comparably.
+  var PROP_MAX = 40;
+  var propLabels = ["Shoulders", "Waist", "Hips"];
+  var bars = (s.proportions || []).map(function (v, i) {
+    var pct = Math.round((v / PROP_MAX) * 100);
+    return '<div class="bar-row"><span class="bar-label">' + propLabels[i] + '</span>' +
+      '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%"></span></span></div>';
+  }).join("");
+
+  // Wear items, each with its garment illustration.
+  var wear = s.wear.map(function (w) {
+    var g = GARMENTS[w[2]] || "";
+    return '<li><span class="wear-thumb">' + g + '</span>' +
+      '<span class="wear-text"><span class="cat">' + esc(w[0]) + '</span>' +
+      '<span class="item">' + esc(w[1]) + '</span></span></li>';
   }).join("");
   var avoid = s.avoid.map(function (a) {
     return '<li><span class="x">' + cross + '</span><span>' + esc(a) + '</span></li>';
   }).join("");
 
   root.innerHTML =
+    // ── hero ──
     '<section class="wrap result-hero">' +
       '<div class="halo"></div>' +
       '<div class="result-ill">' + ill(s.path) + '</div>' +
       '<span class="result-eyebrow">Your result' + hi + '</span>' +
       '<h1 class="result-title">You’re ' + s.article + ' <span style="color:var(--color-accent)">' + esc(s.name) + '</span></h1>' +
       '<p class="result-tagline">' + esc(s.tagline) + '</p>' +
-      '<p class="result-summary">' + esc(s.summary) + '</p>' +
     '</section>' +
 
+    // ── visual "at a glance" summary ──
+    '<section class="wrap">' +
+      '<div class="glance">' +
+        '<div class="glance-goal">' +
+          '<span class="glance-label">Your one big idea</span>' +
+          '<p class="glance-goal-text">' + esc(s.goal) + '</p>' +
+          '<p class="glance-summary">' + esc(s.summary) + '</p>' +
+        '</div>' +
+        '<div class="glance-bars">' +
+          '<span class="glance-label">Your proportions</span>' +
+          bars +
+        '</div>' +
+      '</div>' +
+    '</section>' +
+
+    // ── wear / avoid ──
     '<section class="wrap">' +
       '<div class="result-cols">' +
         '<div class="result-card">' +
-          '<h2><span class="ic" style="color:var(--color-accent-700)">' + check + '</span>Start wearing</h2>' +
+          '<h2><span class="ic" style="color:var(--color-accent-700)">' + check + '</span>Pieces to start wearing</h2>' +
           '<ul class="wear-list">' + wear + '</ul>' +
         '</div>' +
         '<div class="result-card">' +
@@ -58,6 +89,7 @@
       '</div>' +
     '</section>' +
 
+    // ── $47 pitch ──
     '<section class="wrap">' +
       '<div class="pitch">' +
         '<span class="eyebrow">Your complete ' + esc(s.name) + ' playbook</span>' +
@@ -76,22 +108,45 @@
       '</div>' +
     '</section>' +
 
+    // ── whole-guide mockup ──
+    '<section class="wrap mockup-sec">' +
+      '<div class="mockup">' +
+        '<div class="mockup-back"></div>' +
+        '<div class="mockup-back mockup-back-2"></div>' +
+        '<figure class="mockup-cover">' +
+          '<span class="mc-kicker">The Complete Guide</span>' +
+          '<div>' +
+            '<h3 class="mc-title">Dressing for<span class="script">Your Shape</span></h3>' +
+            '<span class="mc-rule"></span>' +
+          '</div>' +
+          '<div>' +
+            '<div class="mc-byline">Rita Roumieh</div>' +
+            '<div class="mc-sub">Image &amp; Style</div>' +
+          '</div>' +
+        '</figure>' +
+      '</div>' +
+      '<div class="mockup-copy">' +
+        '<span class="kicker">The whole guide</span>' +
+        '<h2>Every shape. Every piece. One beautiful guide.</h2>' +
+        '<p>All five shapes, each category, your colours and a ready-to-shop list — everything laid out and ready to use, starting with your ' + esc(s.name) + ' pages.</p>' +
+        '<div class="mockup-cta"><a class="btn btn-primary" data-buy href="' + (cfg.checkoutUrl || "#") + '">Get the full guide — $47</a></div>' +
+      '</div>' +
+    '</section>' +
+
+    // ── footer ──
     '<footer class="wrap result-foot">' +
       '<div class="name">Rita Roumieh</div>' +
       '<div class="sub">Image &amp; Style</div>' +
       '<a class="retake" href="index.html">← Retake the shape quiz</a>' +
     '</footer>';
 
-  // personalise page title
   try { document.title = "You’re " + s.article + " " + s.name + " — Dressing for Your Shape"; } catch (e) {}
-
   if (window.ritaTrack) window.ritaTrack("result_view", { shape: key });
 
-  var buy = root.querySelector("[data-buy]");
-  if (buy) {
+  root.querySelectorAll("[data-buy]").forEach(function (buy) {
     buy.addEventListener("click", function (e) {
       if (window.ritaTrack) window.ritaTrack("checkout_click", { shape: key });
       if (!cfg.checkoutUrl || cfg.checkoutUrl === "#") e.preventDefault();
     });
-  }
+  });
 })();

@@ -150,6 +150,7 @@ ${head(`You're ${art} ${nm} — Dressing for Your Shape`, `Your ${nm} body-shape
   </nav>
   <main id="result-root"></main>
   <script src="assets/shapes-data.js"></script>
+  <script src="assets/garments.js"></script>
   <script src="assets/result.js"></script>
 </body>
 </html>

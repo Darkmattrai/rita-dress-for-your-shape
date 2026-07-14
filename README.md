@@ -47,7 +47,8 @@ index.html              landing + opt-in modal
 assets/
   config.js             ← your integration ids (edit this)
   analytics.js          GTM + Meta Pixel loader + ritaTrack()
-  shapes-data.js        the five shapes: summary, wear/avoid, silhouette path
+  shapes-data.js        the five shapes: goal, proportions, summary, wear/avoid
+  garments.js           custom fashion-flat illustrations for each piece
   app.css               all styles + @font-face (real brand fonts)
   app.js                landing logic: modal, picker, lead capture, redirect
   result.js             renders a result page from its data-shape
