@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dressing for Your Shape — Rita Roumieh</title>
+<meta name="description" content="A free guide to knowing your shape and dressing it beautifully, so getting ready in the morning feels easy — from Rita Roumieh, Image &amp; Style.">
+<style>
+  /* ─── Fonts ─────────────────────────────────────────────────────────── */
+  @font-face { font-family: "Cochin"; src: url("fonts/Cochin.ttf") format("truetype"); font-weight: 400 700; font-display: swap; }
+  /* Formal English roundhand script for the decorative accent — Pinyon Script (SIL OFL),
+     a license-clean stand-in for Bickham Script Pro. See fonts/PinyonScript-OFL.txt. */
+  @font-face { font-family: "Rita Script"; src: url("fonts/PinyonScript-Regular.ttf") format("truetype"); font-weight: 400 700; font-display: swap; }
+
+  /* ─── Design-system tokens (Organic) ────────────────────────────────── */
+  :root {
+    --color-surface: #ebddc5;
+    --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+
+    --color-neutral-100: #f9f4ed;
+    --color-neutral-200: #eee7db;
+    --color-neutral-300: #dcd3c4;
+    --color-neutral-400: #c0b6a5;
+    --color-neutral-500: #a19786;
+    --color-neutral-600: #82796a;
+    --color-neutral-700: #645c50;
+    --color-neutral-800: #474238;
+    --color-neutral-900: #2e2b25;
+
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 28px;
+
+    --shadow-sm: 0 1px 2px color-mix(in srgb, #2e2b25 14%, transparent);
+    --shadow-md: 0 3px 10px color-mix(in srgb, #2e2b25 16%, transparent);
+    --shadow-lg: 0 12px 32px color-mix(in srgb, #2e2b25 22%, transparent);
+  }
+
+  /* ─── Brand overrides — light ground, burgundy accent ───────────────── */
+  :root {
+    --color-bg: #F5EFE8;
+    --color-text: #2A1416;
+    --color-accent: #4A0E1B;
+    --color-accent-100: #EFDEDF;
+    --color-accent-200: #E1C4C7;
+    --color-accent-300: #C795A0;
+    --color-accent-500: #4A0E1B;
+    --color-accent-600: #3D0B16;
+    --color-accent-700: #330000;
+    --color-accent-800: #290008;
+    --color-accent-900: #1E0004;
+    --color-accent-2: #7A5C52;
+    --color-accent-2-100: #EBE3DE;
+    --color-accent-2-200: #DBCEC7;
+    --color-accent-2-300: #C1AEA4;
+    --color-accent-2-500: #7A5C52;
+    --color-accent-2-600: #6A4E45;
+    --color-accent-2-700: #513A33;
+    --color-accent-2-800: #3D2C27;
+    --color-accent-2-900: #291D1A;
+    --font-heading: "Cochin", Georgia, "Times New Roman", serif;
+    --font-body: "Cochin", Georgia, "Times New Roman", serif;
+    --font-script: "Rita Script", "Snell Roundhand", "Segoe Script", cursive;
+  }
+
+  /* ─── Base ──────────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  img { display: block; max-width: 100%; }
+  figure { margin: 0; }
+  .display-line { display: block; }
+  ::placeholder { color: color-mix(in srgb, var(--color-text) 42%, transparent); }
+  :focus { outline: none; }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  ::selection { background: color-mix(in srgb, var(--color-accent) 24%, transparent); }
+  .washed { filter: saturate(0.6) contrast(0.85) brightness(1.1) opacity(0.94); }
+
+  /* ─── Buttons ───────────────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    cursor: pointer; text-decoration: none;
+    font-family: var(--font-heading); font-weight: 400;
+    font-size: 13px; line-height: 1.2; color: var(--color-text);
+    background: transparent; border: 1px solid transparent;
+    padding: 7.5px 13.2px; border-radius: 999px;
+  }
+  .btn svg { display: block; }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-primary { background: var(--color-accent); color: var(--color-bg); }
+  .btn-primary:hover { background: var(--color-accent-600); }
+  .btn-primary:active { background: var(--color-accent-700); }
+  .btn-secondary { border-color: var(--color-divider); }
+  .btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+  .btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
+  .btn-icon { width: 34px; height: 34px; padding: 0; }
+  .btn-block { width: 100%; }
+
+  /* ─── Forms ─────────────────────────────────────────────────────────── */
+  .field > label {
+    display: block; font-size: 12px; margin-bottom: 5px;
+    color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  }
+  .input {
+    width: 100%; min-height: 36px; padding: 10px 16px; font: inherit;
+    font-size: 15px; color: var(--color-text); caret-color: var(--color-accent);
+    background: var(--color-neutral-200);
+    border: 1px solid var(--color-divider); border-radius: 999px;
+  }
+  .input:hover { border-color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+  .input:focus-visible { border-color: var(--color-accent); outline-offset: 0; }
+
+  /* ─── Guide cover mockup ────────────────────────────────────────────── */
+  .cover {
+    display: flex; flex-direction: column; justify-content: space-between;
+    text-align: center; color: #F5EFE8;
+    padding: clamp(22px, 6%, 34px);
+    background:
+      radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, #F5EFE8 14%, transparent), transparent 60%),
+      linear-gradient(160deg, var(--color-accent-600), var(--color-accent-900));
+  }
+  .cover::after {
+    content: ""; position: absolute; inset: 12px; border-radius: calc(var(--radius-lg) - 8px);
+    border: 1px solid color-mix(in srgb, #F5EFE8 30%, transparent); pointer-events: none;
+  }
+  .cover-kicker { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-accent-300); }
+  .cover-title { font-family: var(--font-heading); font-weight: 400; font-size: clamp(28px, 12%, 40px); line-height: 1.12; letter-spacing: -0.01em; margin: 0; }
+  .cover-title .script { display: block; font-family: var(--font-script); font-size: 1.55em; line-height: 0.9; color: #F5EFE8; margin-top: 0.06em; }
+  .cover-rule { display: block; width: 40px; height: 1px; margin: 14px auto; background: color-mix(in srgb, #F5EFE8 55%, transparent); }
+  .cover-byline { font-family: var(--font-heading); font-size: 15px; letter-spacing: 0.01em; }
+  .cover-sub { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-300); margin-top: 4px; }
+
+  /* ─── Modal ─────────────────────────────────────────────────────────── */
+  [hidden] { display: none !important; }
+  @keyframes optin-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes optin-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ─── Responsive ────────────────────────────────────────────────────── */
+  @media (max-width: 720px) {
+    .benefits-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    .steps-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  }
+</style>
+</head>
+<body>
+<div style="background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); font-size: 17px; line-height: 1.65; overflow-x: clip; min-height: 100vh;">
+
+  <nav style="display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 1200px; margin: 0 auto; padding: 22px clamp(20px, 5vw, 72px);">
+    <span style="font-family: var(--font-heading); font-size: 22px; letter-spacing: -0.01em;">Rita Roumieh</span>
+    <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 400; color: var(--color-accent);">Image &amp; Style</span>
+  </nav>
+
+  <!-- ABOVE THE FOLD: headline, sub, mockup, CTA (centered) -->
+  <section style="position: relative; max-width: 820px; margin: 0 auto; padding: clamp(16px, 3vw, 40px) clamp(20px, 5vw, 48px) clamp(44px, 6vw, 80px); text-align: center;">
+    <div style="position: absolute; right: -180px; top: -140px; width: 420px; height: 420px; border-radius: 50%; background: var(--color-accent-2-200); z-index: 0; pointer-events: none;"></div>
+
+    <div style="position: relative; z-index: 1;">
+      <h1 style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(44px, 6.2vw, 74px); line-height: 1.05; letter-spacing: -0.02em; margin: 0;">
+        <span class="display-line">Dress for the <span style="font-family: var(--font-script); font-weight: 400; font-size: 1.5em; line-height: 0.7; color: var(--color-accent); padding: 0 0.06em;">shape</span></span>
+        <span class="display-line" style="color: var(--color-accent);">you actually have.</span>
+      </h1>
+      <p style="font-size: clamp(17px, 1.8vw, 21px); line-height: 1.6; max-width: 46ch; margin: 22px auto 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">
+        A free guide to knowing your shape and dressing it beautifully — so getting ready in the morning feels easy, not like a fight with your wardrobe.
+      </p>
+
+      <!-- mockup -->
+      <div style="width: 100%; max-width: 320px; margin: clamp(36px, 4vw, 52px) auto 0;">
+        <div style="position: relative;">
+          <div style="position: absolute; inset: -22px -22px auto auto; width: 180px; height: 180px; border-radius: 50%; background: var(--color-accent-200); z-index: 0;"></div>
+          <figure class="cover" style="position: relative; z-index: 1; margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 3 / 4; transform: rotate(-2deg);">
+            <span class="cover-kicker">A Free Style Guide</span>
+            <div>
+              <h3 class="cover-title">Dressing for<span class="script">Your Shape</span></h3>
+              <span class="cover-rule"></span>
+            </div>
+            <div>
+              <div class="cover-byline">Rita Roumieh</div>
+              <div class="cover-sub">Image &amp; Style</div>
+            </div>
+          </figure>
+        </div>
+      </div>
+
+      <!-- CTA under mockup -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: clamp(32px, 4vw, 44px);">
+        <button type="button" data-open-form class="btn btn-primary" style="min-height: 56px; font-size: 17px; padding-inline: 40px;">Send me the free guide</button>
+        <span style="font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; color: color-mix(in srgb, var(--color-text) 60%, transparent);">10-page PDF · Instant download</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section style="max-width: 1080px; margin: 0 auto; padding: clamp(28px, 4vw, 52px) clamp(20px, 5vw, 72px);">
+    <span style="display: block; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--color-accent); margin-bottom: 12px;">What you'll walk away with</span>
+    <h2 style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.08; letter-spacing: -0.015em; margin: 0 0 clamp(28px, 3vw, 40px); max-width: 22ch;">A calmer, more confident way to get dressed.</h2>
+    <ul class="benefits-grid" style="list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px clamp(28px, 4vw, 56px);">
+      <li style="display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 1.5;">
+        <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--color-accent-200); display: flex; align-items: center; justify-content: center; margin-top: 1px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span>Pinpoint your shape in two minutes — just a tape measure needed.</span>
+      </li>
+      <li style="display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 1.5;">
+        <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--color-accent-200); display: flex; align-items: center; justify-content: center; margin-top: 1px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span>Learn exactly what to wear to flatter your shape — the pieces that suit you.</span>
+      </li>
+      <li style="display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 1.5;">
+        <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--color-accent-200); display: flex; align-items: center; justify-content: center; margin-top: 1px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span>Get a ready-to-wear shopping list of pieces that just work.</span>
+      </li>
+      <li style="display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 1.5;">
+        <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--color-accent-200); display: flex; align-items: center; justify-content: center; margin-top: 1px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span>Stop dreading the wardrobe and get dressed with real confidence.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- WHAT'S INSIDE -->
+  <section style="max-width: 1080px; margin: 0 auto; padding: clamp(28px, 4vw, 56px) clamp(20px, 5vw, 72px);">
+    <span style="display: block; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--color-accent); margin-bottom: 12px;">What's inside</span>
+    <h2 style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(32px, 3.8vw, 48px); line-height: 1.08; letter-spacing: -0.015em; margin: 0; max-width: 20ch;">Three easy steps to an outfit that works.</h2>
+
+    <div class="steps-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 36px); margin-top: clamp(32px, 4vw, 52px);">
+      <div>
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 26px; color: var(--color-accent-700); margin-bottom: 20px;">1</div>
+        <h3 style="font-family: var(--font-heading); font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0;">Find your shape</h3>
+        <p style="font-size: 15.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">Two minutes with a tape measure. It's the relationship between your measurements — not the numbers — that names your shape.</p>
+      </div>
+      <div>
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 26px; color: var(--color-accent-700); margin-bottom: 20px;">2</div>
+        <h3 style="font-family: var(--font-heading); font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0;">Learn your styling tips</h3>
+        <p style="font-size: 15.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">The simple ways to flatter it, framed as what to do — never what to avoid. Proportion and balance, made obvious.</p>
+      </div>
+      <div>
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 26px; color: var(--color-accent-700); margin-bottom: 20px;">3</div>
+        <h3 style="font-family: var(--font-heading); font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0;">Try the instant wins</h3>
+        <p style="font-size: 15.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">A short list of pieces that just work for you — ready to pull on tomorrow morning without a second thought.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: clamp(36px, 4vw, 56px);">
+      <p style="font-size: 16px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent); margin: 0; max-width: 60ch;">Whatever your shape, there's a page with your name on it — your one big idea, your go-to styling tips, and your instant wins, all laid out and ready to use.</p>
+    </div>
+  </section>
+
+  <!-- CLOSE -->
+  <section style="max-width: 1080px; margin: 0 auto; padding: clamp(20px, 3vw, 40px) clamp(20px, 5vw, 72px) clamp(48px, 6vw, 88px);">
+    <div style="background: var(--color-accent); --color-text: #F5EFE8; color: #F5EFE8; border-radius: var(--radius-lg); padding: clamp(32px, 5vw, 64px); text-align: center;">
+      <h2 style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(32px, 4vw, 52px); line-height: 1.08; letter-spacing: -0.015em; margin: 0 auto; max-width: 22ch;">Your shape was never the problem. It just needed the right pieces.</h2>
+      <p style="font-size: 16px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 80%, transparent); margin: 20px auto 0; max-width: 52ch;">Grab the free guide and take the first step — your colours and a wardrobe that actually works together are where it all clicks into place.</p>
+      <button type="button" data-open-form class="btn btn-primary" style="min-height: 54px; font-size: 17px; padding-inline: 34px; margin-top: 28px; background: #F5EFE8; color: var(--color-accent);">Send me the free guide</button>
+      <p style="font-family: var(--font-heading); font-size: 20px; margin: 34px 0 0;">Rita Roumieh</p>
+      <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 400; color: var(--color-accent-300); margin: 6px 0 0;">Image &amp; Style</p>
+    </div>
+  </section>
+
+  <!-- FORM POPUP -->
+  <div id="form-overlay" hidden data-close-form style="position: fixed; inset: 0; z-index: 100; background: color-mix(in srgb, var(--color-neutral-900) 55%, transparent); display: flex; align-items: center; justify-content: center; padding: 20px; animation: optin-fade 0.2s ease;">
+    <div data-stop role="dialog" aria-modal="true" aria-labelledby="form-title" style="position: relative; width: 100%; max-width: 460px; max-height: 92vh; overflow-y: auto; background: var(--color-neutral-100); border-radius: var(--radius-lg); padding: clamp(26px, 4vw, 40px); box-shadow: var(--shadow-lg); animation: optin-rise 0.28s ease;">
+      <button type="button" data-close-form aria-label="Close" class="btn btn-icon" style="position: absolute; top: 16px; right: 16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+
+      <div id="form-step">
+        <h2 id="form-title" style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(28px, 5vw, 36px); line-height: 1.1; letter-spacing: -0.01em; margin: 0; padding-right: 32px;">Where should I send it?</h2>
+        <p style="font-size: 15.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">Pop your details in below and the guide lands in your inbox in seconds.</p>
+
+        <form id="optin-form" style="display: grid; gap: 14px; margin-top: 24px;">
+          <div class="field">
+            <label for="f-name">First name</label>
+            <input class="input" id="f-name" name="name" type="text" required placeholder="Rita" autocomplete="given-name" />
+          </div>
+          <div class="field">
+            <label for="f-email">Email address</label>
+            <input class="input" id="f-email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone number</label>
+            <input class="input" id="f-phone" name="phone" type="tel" required placeholder="+44 7000 000000" autocomplete="tel" />
+          </div>
+          <div class="field">
+            <label for="f-insta">Instagram account</label>
+            <input class="input" id="f-insta" name="instagram" type="text" required placeholder="@yourhandle" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" style="min-height: 52px; font-size: 17px; margin-top: 6px;">Send me the free guide</button>
+          <p style="font-size: 13px; line-height: 1.5; text-align: center; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin: 4px 0 0;">One warm email a week. Unsubscribe any time.</p>
+        </form>
+      </div>
+
+      <div id="success-step" hidden>
+        <div style="text-align: center; padding: 12px 0;">
+          <div style="width: 68px; height: 68px; border-radius: 50%; background: var(--color-accent-2-200); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-2-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <h2 style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(26px, 5vw, 34px); line-height: 1.15; margin: 0;">It's on its way<span id="name-suffix"></span></h2>
+          <p style="font-size: 15.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 14px auto 0; max-width: 34ch;">Check your inbox for <em>Dressing for Your Shape</em>. If it's hiding, peek in your spam and drag it to safety.</p>
+          <button type="button" data-close-form class="btn btn-secondary" style="margin-top: 22px;">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  (function () {
+    var overlay = document.getElementById("form-overlay");
+    var formStep = document.getElementById("form-step");
+    var successStep = document.getElementById("success-step");
+    var form = document.getElementById("optin-form");
+    var nameSuffix = document.getElementById("name-suffix");
+    var lastFocused = null;
+
+    function openForm() {
+      lastFocused = document.activeElement;
+      overlay.hidden = false;
+      document.body.style.overflow = "hidden";
+      var firstInput = document.getElementById("f-name");
+      if (firstInput) firstInput.focus();
+    }
+
+    function closeForm() {
+      overlay.hidden = true;
+      document.body.style.overflow = "";
+      // reset back to the form step for a fresh open
+      formStep.hidden = false;
+      successStep.hidden = true;
+      form.reset();
+      if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+    }
+
+    document.querySelectorAll("[data-open-form]").forEach(function (btn) {
+      btn.addEventListener("click", openForm);
+    });
+
+    // Backdrop and close buttons
+    document.querySelectorAll("[data-close-form]").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        // Only close on the element itself (backdrop) or explicit close buttons
+        if (e.currentTarget === el) closeForm();
+      });
+    });
+
+    // Prevent clicks inside the dialog from bubbling to the backdrop
+    document.querySelectorAll("[data-stop]").forEach(function (el) {
+      el.addEventListener("click", function (e) { e.stopPropagation(); });
+    });
+
+    // Escape to close
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !overlay.hidden) closeForm();
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      var name = (data.get("name") || "").trim();
+
+      // TODO: POST `data` to your email/CRM provider here to actually deliver the guide.
+      // e.g. fetch("/api/subscribe", { method: "POST", body: data });
+
+      nameSuffix.textContent = name ? ", " + name : "";
+      formStep.hidden = true;
+      successStep.hidden = false;
+    });
+  })();
+</script>
+</body>
+</html>
