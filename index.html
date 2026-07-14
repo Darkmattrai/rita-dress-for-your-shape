@@ -130,6 +130,49 @@
   .cover-byline { font-family: var(--font-heading); font-size: 15px; letter-spacing: 0.01em; }
   .cover-sub { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-300); margin-top: 4px; }
 
+  /* ─── Shape selector ────────────────────────────────────────────────── */
+  .shape-field { border: 0; padding: 0; margin: 4px 0 0; min-width: 0; }
+  .shape-field legend { padding: 0; font-family: var(--font-heading); font-weight: 400; font-size: 19px; line-height: 1.2; margin-bottom: 12px; color: var(--color-text); }
+  .shape-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+  .shape-opt {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 10px 4px 9px; cursor: pointer; background: var(--color-neutral-200);
+    border: 1.5px solid transparent; border-radius: var(--radius-md); color: var(--color-accent-300);
+    font-family: var(--font-body); transition: border-color .15s, background .15s, color .15s;
+  }
+  .shape-opt:hover { background: var(--color-accent-100); }
+  .shape-opt .shape-ill { width: 100%; max-width: 44px; }
+  .shape-opt .shape-name { font-size: 11px; letter-spacing: 0.01em; color: color-mix(in srgb, var(--color-text) 72%, transparent); }
+  .shape-opt[aria-pressed="true"] { border-color: var(--color-accent); background: var(--color-accent-100); color: var(--color-accent); }
+  .shape-opt[aria-pressed="true"] .shape-name { color: var(--color-accent); font-weight: 600; }
+  .shape-opt:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  .shape-error { color: var(--color-accent); font-size: 13px; margin: 10px 0 0; }
+  @media (max-width: 520px) { .shape-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  /* ─── Quiz result ───────────────────────────────────────────────────── */
+  .result-head { text-align: center; }
+  .result-ill { width: 76px; margin: 0 auto; color: var(--color-accent); }
+  .result-kicker { display: block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 400; color: var(--color-accent); margin: 10px 0 4px; }
+  .result-title { font-family: var(--font-heading); font-weight: 400; font-size: clamp(26px, 5vw, 34px); line-height: 1.12; margin: 0; }
+  .result-summary { font-size: 15px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 80%, transparent); margin: 12px auto 0; max-width: 42ch; }
+  .result-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+  .result-card { background: var(--color-neutral-200); border-radius: var(--radius-md); padding: 16px 16px 18px; }
+  .result-card h4 { display: flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; margin: 0 0 12px; color: var(--color-accent); }
+  .result-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
+  .result-list li { font-size: 14px; line-height: 1.4; }
+  .result-list .cat { display: block; font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); margin-bottom: 1px; }
+  .result-avoid .cat { color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+  .pitch { margin-top: 22px; background: var(--color-accent); color: #F5EFE8; border-radius: var(--radius-lg); padding: clamp(22px, 5vw, 30px); text-align: center; }
+  .pitch .kicker { display: block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-300); margin-bottom: 8px; }
+  .pitch h3 { font-family: var(--font-heading); font-weight: 400; font-size: clamp(24px, 5vw, 30px); line-height: 1.12; margin: 0; }
+  .pitch p { font-size: 14.5px; line-height: 1.55; color: color-mix(in srgb, #F5EFE8 86%, transparent); margin: 12px auto 0; max-width: 44ch; }
+  .pitch .price { font-family: var(--font-heading); font-size: 30px; margin: 18px 0 2px; }
+  .pitch .price small { font-family: var(--font-body); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-300); display: block; margin-top: 2px; }
+  .pitch .btn-buy { background: #F5EFE8; color: var(--color-accent); min-height: 54px; font-size: 17px; padding-inline: 34px; margin-top: 18px; }
+  .pitch .btn-buy:hover { background: #fff; }
+  .pitch .note { font-size: 12.5px; color: color-mix(in srgb, #F5EFE8 70%, transparent); margin-top: 16px; }
+  @media (max-width: 460px) { .result-cols { grid-template-columns: 1fr; } }
+
   /* ─── Modal ─────────────────────────────────────────────────────────── */
   [hidden] { display: none !important; }
   @keyframes optin-fade { from { opacity: 0; } to { opacity: 1; } }
@@ -254,12 +297,12 @@
 
   <!-- FORM POPUP -->
   <div id="form-overlay" hidden data-close-form style="position: fixed; inset: 0; z-index: 100; background: color-mix(in srgb, var(--color-neutral-900) 55%, transparent); display: flex; align-items: center; justify-content: center; padding: 20px; animation: optin-fade 0.2s ease;">
-    <div data-stop role="dialog" aria-modal="true" aria-labelledby="form-title" style="position: relative; width: 100%; max-width: 460px; max-height: 92vh; overflow-y: auto; background: var(--color-neutral-100); border-radius: var(--radius-lg); padding: clamp(26px, 4vw, 40px); box-shadow: var(--shadow-lg); animation: optin-rise 0.28s ease;">
+    <div data-stop role="dialog" aria-modal="true" aria-labelledby="form-title" style="position: relative; width: 100%; max-width: 540px; max-height: 92vh; overflow-y: auto; background: var(--color-neutral-100); border-radius: var(--radius-lg); padding: clamp(26px, 4vw, 40px); box-shadow: var(--shadow-lg); animation: optin-rise 0.28s ease;">
       <button type="button" data-close-form aria-label="Close" class="btn btn-icon" style="position: absolute; top: 16px; right: 16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
 
       <div id="form-step">
-        <h2 id="form-title" style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(28px, 5vw, 36px); line-height: 1.1; letter-spacing: -0.01em; margin: 0; padding-right: 32px;">Where should I send it?</h2>
-        <p style="font-size: 15.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">Pop your details in below and the guide lands in your inbox in seconds.</p>
+        <h2 id="form-title" style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(28px, 5vw, 36px); line-height: 1.1; letter-spacing: -0.01em; margin: 0; padding-right: 32px;">Get your free shape result</h2>
+        <p style="font-size: 15.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">Answer below and I'll show you what to wear for your shape — and send your starter guide straight to your inbox.</p>
 
         <form id="optin-form" style="display: grid; gap: 14px; margin-top: 24px;">
           <div class="field">
@@ -278,21 +321,20 @@
             <label for="f-insta">Instagram account</label>
             <input class="input" id="f-insta" name="instagram" type="text" required placeholder="@yourhandle" />
           </div>
-          <button type="submit" class="btn btn-primary btn-block" style="min-height: 52px; font-size: 17px; margin-top: 6px;">Send me the free guide</button>
+
+          <fieldset class="shape-field">
+            <legend>What represents your body the most?</legend>
+            <div id="shape-grid" class="shape-grid"></div>
+            <input type="hidden" name="shape" id="shape-input" />
+            <p id="shape-error" class="shape-error" hidden>Tap the shape that's closest to you to continue.</p>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary btn-block" style="min-height: 52px; font-size: 17px; margin-top: 6px;">Show me my result</button>
           <p style="font-size: 13px; line-height: 1.5; text-align: center; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin: 4px 0 0;">One warm email a week. Unsubscribe any time.</p>
         </form>
       </div>
 
-      <div id="success-step" hidden>
-        <div style="text-align: center; padding: 12px 0;">
-          <div style="width: 68px; height: 68px; border-radius: 50%; background: var(--color-accent-2-200); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-2-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-          </div>
-          <h2 style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(26px, 5vw, 34px); line-height: 1.15; margin: 0;">It's on its way<span id="name-suffix"></span></h2>
-          <p style="font-size: 15.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 14px auto 0; max-width: 34ch;">Check your inbox for <em>Dressing for Your Shape</em>. If it's hiding, peek in your spam and drag it to safety.</p>
-          <button type="button" data-close-form class="btn btn-secondary" style="margin-top: 22px;">Close</button>
-        </div>
-      </div>
+      <div id="result-step" hidden></div>
     </div>
   </div>
 
@@ -300,12 +342,136 @@
 
 <script>
   (function () {
+    // ── Body-shape illustration helper (parametric silhouettes) ──────────
+    function ill(d) {
+      return '<svg viewBox="0 0 120 200" fill="none" aria-hidden="true" style="width:100%;height:auto;display:block">' +
+        '<circle cx="60" cy="26" r="13" fill="currentColor"/>' +
+        '<path d="' + d + '" fill="currentColor"/></svg>';
+    }
+
+    // ── Shape data: summary + one recommendation per category (a teaser),
+    //    distilled from Rita's full styling guides. The paid guide expands
+    //    each of these into the complete playbook. ─────────────────────────
+    var SHAPES = {
+      "hourglass": {
+        name: "Hourglass", article: "an",
+        path: "M 27 56 C 27 78, 41 86, 41 104 C 41 122, 27 124, 27 142 C 27 160, 40 176, 60 176 C 80 176, 93 160, 93 142 C 93 124, 79 122, 79 104 C 79 86, 93 78, 93 56 C 93 50, 70 48, 69 46 L 51 46 C 50 48, 27 50, 27 56 Z",
+        summary: "Your shoulders and hips mirror each other and your waist nips in on its own — the most balanced of the five shapes. Dressing it is simply about letting that waist show.",
+        wear: [
+          ["Neckline", "A deep V-neck or sweetheart that follows your balance"],
+          ["Top", "A wrap top that ties in at your natural waist"],
+          ["Dress", "A belted wrap dress — practically made for you"],
+          ["Denim", "Straight-leg or bootcut jeans that skim your curves"]
+        ],
+        avoid: [
+          "Boxy, oversized shapes that swallow your waist",
+          "Stiff, unstructured fabrics that flatten your curves",
+          "Drop-waist styles that throw off your balance"
+        ]
+      },
+      "rectangle": {
+        name: "Rectangle", article: "a",
+        path: "M 32 56 C 32 78, 35 86, 35 104 C 35 122, 32 124, 32 142 C 32 160, 40 176, 60 176 C 80 176, 88 160, 88 142 C 88 124, 85 122, 85 104 C 85 86, 88 78, 88 56 C 88 50, 70 48, 69 46 L 51 46 C 50 48, 32 50, 32 56 Z",
+        summary: "Your shoulders, waist and hips run in a smooth, even line. The magic is in creating curves — building shape and the illusion of a waist with texture and volume.",
+        wear: [
+          ["Neckline", "A scoop or sweetheart that widens the top half"],
+          ["Top", "A peplum or ruched top that carves out a waist"],
+          ["Jacket", "A cropped jacket with peplum or volume"],
+          ["Denim", "Textured or patterned trousers that add dimension"]
+        ],
+        avoid: [
+          "Plain, streamlined cuts with no shaping",
+          "Flat, unadorned fabrics that read as straight",
+          "Boxy styles that echo your even line"
+        ]
+      },
+      "oval": {
+        name: "Oval", article: "an",
+        path: "M 35 56 C 35 78, 25 86, 25 104 C 25 122, 33 124, 33 142 C 33 160, 40 176, 60 176 C 80 176, 87 160, 87 142 C 87 124, 95 122, 95 104 C 95 86, 85 78, 85 56 C 85 50, 70 48, 69 46 L 51 46 C 50 48, 35 50, 35 56 Z",
+        summary: "You carry softness through the middle, often with a lovely bust and great legs. The goal is to lengthen the torso and keep the eye travelling up and down.",
+        wear: [
+          ["Neckline", "A long V-neck that draws the eye upward"],
+          ["Top", "A fitted top with vertical seams or details"],
+          ["Outerwear", "A longer, structured jacket for clean vertical lines"],
+          ["Denim", "Straight-leg or tapered trousers in a dark wash"]
+        ],
+        avoid: [
+          "Clingy fabrics that cut across the middle",
+          "Cropped, boxy cuts that shorten you",
+          "Wide horizontal stripes and bulk at the waist"
+        ]
+      },
+      "inverted-triangle": {
+        name: "Inverted Triangle", article: "an",
+        path: "M 23 56 C 23 78, 36 86, 36 104 C 36 122, 39 124, 39 142 C 39 160, 40 176, 60 176 C 80 176, 81 160, 81 142 C 81 124, 84 122, 84 104 C 84 86, 97 78, 97 56 C 97 50, 70 48, 69 46 L 51 46 C 50 48, 23 50, 23 56 Z",
+        summary: "Your shoulders and bust are broader than your hips. Dressing it is about softening those strong shoulders and adding a little interest and volume to the lower half.",
+        wear: [
+          ["Neckline", "A V-neck that narrows and softens the shoulder line"],
+          ["Sleeve", "A fitted, tapered sleeve — no volume up top"],
+          ["Bottom", "Wide-leg or flared trousers that build the lower half"],
+          ["Skirt", "An A-line skirt that adds gentle hip volume"]
+        ],
+        avoid: [
+          "Broad boat necks and voluminous puff sleeves",
+          "Shoulder pads or structure across the top",
+          "Skinny bottoms that leave the balance top-heavy"
+        ]
+      },
+      "pear": {
+        name: "Pear", article: "a",
+        path: "M 38 56 C 38 78, 36 86, 36 104 C 36 122, 22 124, 22 142 C 22 160, 40 176, 60 176 C 80 176, 98 160, 98 142 C 98 124, 84 122, 84 104 C 84 86, 82 78, 82 56 C 82 50, 70 48, 69 46 L 51 46 C 50 48, 38 50, 38 56 Z",
+        summary: "Your hips and thighs are fuller than your shoulders and bust. The goal is to draw the eye upward and let your top half catch up with your lovely lower half.",
+        wear: [
+          ["Neckline", "A wide boat or off-shoulder neckline to broaden the top"],
+          ["Sleeve", "A structured or statement sleeve that builds the shoulders"],
+          ["Top", "A lighter, brighter top with detail up high"],
+          ["Denim", "A dark straight-leg or bootcut in a deeper tone"]
+        ],
+        avoid: [
+          "Tight, pale or patterned bottoms that spotlight the hips",
+          "Oversized tops that hide your waist",
+          "Plain, minimal necklines with no interest up top"
+        ]
+      }
+    };
+    var ORDER = ["hourglass", "rectangle", "oval", "inverted-triangle", "pear"];
+
     var overlay = document.getElementById("form-overlay");
+    var dialog = overlay.querySelector("[data-stop]");
     var formStep = document.getElementById("form-step");
-    var successStep = document.getElementById("success-step");
+    var resultStep = document.getElementById("result-step");
     var form = document.getElementById("optin-form");
-    var nameSuffix = document.getElementById("name-suffix");
+    var grid = document.getElementById("shape-grid");
+    var shapeInput = document.getElementById("shape-input");
+    var shapeError = document.getElementById("shape-error");
     var lastFocused = null;
+
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+
+    // Build the selectable shape grid
+    ORDER.forEach(function (key) {
+      var s = SHAPES[key];
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "shape-opt";
+      btn.setAttribute("data-shape", key);
+      btn.setAttribute("aria-pressed", "false");
+      btn.innerHTML = '<span class="shape-ill">' + ill(s.path) + '</span><span class="shape-name">' + esc(s.name) + '</span>';
+      btn.addEventListener("click", function () { selectShape(key); });
+      grid.appendChild(btn);
+    });
+
+    function selectShape(key) {
+      shapeInput.value = key;
+      shapeError.hidden = true;
+      grid.querySelectorAll(".shape-opt").forEach(function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-shape") === key ? "true" : "false");
+      });
+    }
 
     function openForm() {
       lastFocused = document.activeElement;
@@ -318,10 +484,14 @@
     function closeForm() {
       overlay.hidden = true;
       document.body.style.overflow = "";
-      // reset back to the form step for a fresh open
+      // reset back to the form for a fresh open
       formStep.hidden = false;
-      successStep.hidden = true;
+      resultStep.hidden = true;
+      resultStep.innerHTML = "";
       form.reset();
+      shapeInput.value = "";
+      shapeError.hidden = true;
+      grid.querySelectorAll(".shape-opt").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
       if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
     }
 
@@ -332,32 +502,84 @@
     // Backdrop and close buttons
     document.querySelectorAll("[data-close-form]").forEach(function (el) {
       el.addEventListener("click", function (e) {
-        // Only close on the element itself (backdrop) or explicit close buttons
         if (e.currentTarget === el) closeForm();
       });
     });
 
     // Prevent clicks inside the dialog from bubbling to the backdrop
-    document.querySelectorAll("[data-stop]").forEach(function (el) {
-      el.addEventListener("click", function (e) { e.stopPropagation(); });
-    });
+    dialog.addEventListener("click", function (e) { e.stopPropagation(); });
 
     // Escape to close
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !overlay.hidden) closeForm();
     });
 
+    function renderResult(key, name) {
+      var s = SHAPES[key];
+      var hi = name ? ", " + esc(name) : "";
+      var wear = s.wear.map(function (w) {
+        return '<li><span class="cat">' + esc(w[0]) + '</span>' + esc(w[1]) + '</li>';
+      }).join("");
+      var avoid = s.avoid.map(function (a) {
+        return '<li>' + esc(a) + '</li>';
+      }).join("");
+
+      resultStep.innerHTML =
+        '<div class="result-head">' +
+          '<div class="result-ill">' + ill(s.path) + '</div>' +
+          '<span class="result-kicker">Your result' + hi + '</span>' +
+          '<h2 class="result-title">You’re ' + s.article + ' ' + esc(s.name) + '</h2>' +
+          '<p class="result-summary">' + esc(s.summary) + '</p>' +
+        '</div>' +
+        '<div class="result-cols">' +
+          '<div class="result-card">' +
+            '<h4><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Start wearing</h4>' +
+            '<ul class="result-list">' + wear + '</ul>' +
+          '</div>' +
+          '<div class="result-card result-avoid">' +
+            '<h4><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Skip for now</h4>' +
+            '<ul class="result-list">' + avoid + '</ul>' +
+          '</div>' +
+        '</div>' +
+        '<div class="pitch">' +
+          '<span class="kicker">Your complete playbook</span>' +
+          '<h3>The full ' + esc(s.name) + ' guide</h3>' +
+          '<p>That’s one piece per category. The complete <em>Dressing for Your Shape</em> guide gives you every category for your ' + esc(s.name) + ' shape — necklines, sleeves, jackets, denim, skirts, dresses, colours, and a ready-to-shop list.</p>' +
+          '<div class="price">$47<small>Instant download</small></div>' +
+          // TODO: point this at your real checkout (Stripe / Gumroad / etc.).
+          '<a class="btn btn-buy" data-buy href="#">Get the full guide</a>' +
+          '<p class="note">Your free starter guide is on its way to your inbox.</p>' +
+        '</div>';
+
+      resultStep.querySelector("[data-buy]").addEventListener("click", function (e) {
+        e.preventDefault();
+        // TODO: replace with a redirect to checkout, e.g.
+        // window.location.href = "https://your-checkout-url";
+      });
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+
+      // require a shape choice (the native inputs are validated by `required`)
+      if (!shapeInput.value) {
+        shapeError.hidden = false;
+        grid.scrollIntoView({ block: "nearest" });
+        return;
+      }
+
       var data = new FormData(form);
       var name = (data.get("name") || "").trim();
+      var key = data.get("shape");
 
-      // TODO: POST `data` to your email/CRM provider here to actually deliver the guide.
+      // TODO: POST `data` (name, email, phone, instagram, shape) to your email/CRM
+      // provider here to capture the lead and deliver the starter guide.
       // e.g. fetch("/api/subscribe", { method: "POST", body: data });
 
-      nameSuffix.textContent = name ? ", " + name : "";
+      renderResult(key, name);
       formStep.hidden = true;
-      successStep.hidden = false;
+      resultStep.hidden = false;
+      if (dialog) dialog.scrollTop = 0;
     });
   })();
 </script>

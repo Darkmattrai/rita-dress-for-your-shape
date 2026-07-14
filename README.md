@@ -1,12 +1,28 @@
-# Dressing for Your Shape — Opt-In Landing Page
+# Dressing for Your Shape — Dynamic Lead Magnet
 
-A single-page lead-capture landing page for **Rita Roumieh · Image & Style**,
-offering a free *Dressing for Your Shape* style guide in exchange for the
-visitor's details.
+A single-page **quiz lead magnet** for **Rita Roumieh · Image & Style**. The
+visitor opts in with their details, picks the body shape that best represents
+them, and gets an instant personalised result — a short styling teaser for
+their shape — which then upsells the full **$47** guide.
 
 Implemented from the Claude Design source
 `Dressing for Your Shape - Opt-In -Cocoa-.dc.html` as a self-contained,
 deployable static page — no build step, no runtime dependencies.
+
+## How it flows
+
+1. Visitor clicks **Send me the free guide** → the opt-in modal opens.
+2. They give first name, email, phone, Instagram, and choose one of five body
+   shapes (**Hourglass, Rectangle, Oval, Inverted Triangle, Pear**), each shown
+   as an on-brand silhouette illustration.
+3. On submit they see a **personalised result**: a brief summary of their shape,
+   one thing to *start wearing* per category and a few to *skip for now*
+   (distilled from Rita's full styling guides).
+4. The result upsells the complete **$47** guide with a clear call to action.
+
+The five shape write-ups are sourced from Rita's body-shape guide series
+(magnifique-brunette.blogspot.com), condensed to one recommendation per
+category so the on-page result is a teaser and the paid guide holds the rest.
 
 ## Files
 
@@ -28,17 +44,31 @@ python3 -m http.server 8000   # then visit http://localhost:8000
 Deploy by uploading the folder to any static host (Netlify, Vercel, GitHub
 Pages, S3, …). Keep `index.html` and the `fonts/` folder together.
 
-## The opt-in form
+## Wiring it up (two `TODO`s)
 
-The modal collects first name, email, phone, and Instagram, then shows a
-personalised confirmation. Submission is currently **client-side only** — no
-data leaves the browser. To actually deliver the guide, wire the form up to
-your email/CRM provider at the marked `TODO` in the `<script>` block near the
-bottom of `index.html`, e.g.:
+Everything runs client-side right now. Two hooks in the `<script>` block near
+the bottom of `index.html` connect it to your stack:
 
-```js
-fetch("/api/subscribe", { method: "POST", body: data });
-```
+1. **Lead capture** — on submit, POST the form data (name, email, phone,
+   instagram, **shape**) to your email/CRM provider so you capture the lead and
+   deliver the starter guide:
+
+   ```js
+   fetch("/api/subscribe", { method: "POST", body: data });
+   ```
+
+2. **Checkout** — point the result's **Get the full guide** button (`data-buy`)
+   at your real checkout (Stripe, Gumroad, …):
+
+   ```js
+   window.location.href = "https://your-checkout-url";
+   ```
+
+## Body-shape illustrations
+
+The five silhouettes are inline SVG generated parametrically (varying
+shoulder / waist / hip widths per shape), so they're crisp at any size, match
+the burgundy palette via `currentColor`, and add no image requests.
 
 ## Design notes
 
