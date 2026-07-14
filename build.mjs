@@ -5,8 +5,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 // Pull the shape list/names straight from the shared data file so this stays in sync.
 const dataSrc = readFileSync(new URL("./assets/shapes-data.js", import.meta.url), "utf8");
 const ORDER = JSON.parse(dataSrc.match(/SHAPE_ORDER\s*=\s*(\[[^\]]*\])/)[1].replace(/'/g, '"'));
-const NAMES = {};
-for (const m of dataSrc.matchAll(/"([a-z-]+)":\s*\{\s*\n\s*name:\s*"([^"]+)"/g)) NAMES[m[1]] = m[2];
+const NAMES = {}, ARTICLES = {};
+for (const m of dataSrc.matchAll(/"([a-z-]+)":\s*\{\s*\n\s*name:\s*"([^"]+)",\s*article:\s*"([^"]+)"/g)) {
+  NAMES[m[1]] = m[2];
+  ARTICLES[m[1]] = m[3];
+}
 
 const head = (title, desc) => `<head>
 <meta charset="utf-8">
@@ -136,10 +139,10 @@ ${head("Dressing for Your Shape — Rita Roumieh", "Take the free 60-second quiz
 
 /* ── Result page (one per shape) ──────────────────────────────────────── */
 const resultPage = (key) => {
-  const nm = NAMES[key];
+  const nm = NAMES[key], art = ARTICLES[key];
   return `<!DOCTYPE html>
 <html lang="en">
-${head(`You're ${/^[aeiou]/i.test(nm) ? "an" : "a"} ${nm} — Dressing for Your Shape`, `Your ${nm} body-shape styling guide from Rita Roumieh — what to wear, what to skip, and the full playbook.`)}
+${head(`You're ${art} ${nm} — Dressing for Your Shape`, `Your ${nm} body-shape styling guide from Rita Roumieh — what to wear, what to skip, and the full playbook.`)}
 <body data-shape="${key}">
   <nav class="nav">
     <span class="nav-brand"><a href="index.html">Rita Roumieh</a></span>
