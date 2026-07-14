@@ -1,16 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+/* Generates index.html + one result page per shape from shared templates.
+   Run:  node build.mjs   (re-run after editing copy/structure here).        */
+import { readFileSync, writeFileSync } from "node:fs";
+
+// Pull the shape list/names straight from the shared data file so this stays in sync.
+const dataSrc = readFileSync(new URL("./assets/shapes-data.js", import.meta.url), "utf8");
+const ORDER = JSON.parse(dataSrc.match(/SHAPE_ORDER\s*=\s*(\[[^\]]*\])/)[1].replace(/'/g, '"'));
+const NAMES = {};
+for (const m of dataSrc.matchAll(/"([a-z-]+)":\s*\{\s*\n\s*name:\s*"([^"]+)"/g)) NAMES[m[1]] = m[2];
+
+const head = (title, desc) => `<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dressing for Your Shape — Rita Roumieh</title>
-<meta name="description" content="Take the free 60-second quiz to discover your body shape and exactly what to wear for it — from Rita Roumieh, Image &amp; Style.">
+<title>${title}</title>
+<meta name="description" content="${desc}">
 <link rel="preload" href="fonts/cochin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/app.css">
 <!-- Integrations (fill ids in assets/config.js). Loaded early so tags fire on every page. -->
 <script src="assets/config.js"></script>
 <script src="assets/analytics.js"></script>
-</head>
+</head>`;
+
+/* ── Landing page ─────────────────────────────────────────────────────── */
+const landing = `<!DOCTYPE html>
+<html lang="en">
+${head("Dressing for Your Shape — Rita Roumieh", "Take the free 60-second quiz to discover your body shape and exactly what to wear for it — from Rita Roumieh, Image &amp; Style.")}
 <body>
 
   <nav class="nav">
@@ -55,22 +68,15 @@
     <span class="kicker" style="margin-bottom: 12px;">What you'll walk away with</span>
     <h2 style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.08; letter-spacing: -0.015em; margin: 0 0 clamp(28px, 3vw, 40px); max-width: 22ch;">A calmer, more confident way to get dressed.</h2>
     <ul style="list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px clamp(28px, 4vw, 56px);">
-      <li style="display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 1.5;">
+      ${[
+        "Pinpoint your shape in two minutes — just a tape measure needed.",
+        "Learn exactly what to wear to flatter your shape — the pieces that suit you.",
+        "Get a ready-to-wear shopping list of pieces that just work.",
+        "Stop dreading the wardrobe and get dressed with real confidence."
+      ].map(t => `<li style="display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 1.5;">
         <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--color-accent-200); display: flex; align-items: center; justify-content: center; margin-top: 1px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-        <span>Pinpoint your shape in two minutes — just a tape measure needed.</span>
-      </li>
-      <li style="display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 1.5;">
-        <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--color-accent-200); display: flex; align-items: center; justify-content: center; margin-top: 1px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-        <span>Learn exactly what to wear to flatter your shape — the pieces that suit you.</span>
-      </li>
-      <li style="display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 1.5;">
-        <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--color-accent-200); display: flex; align-items: center; justify-content: center; margin-top: 1px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-        <span>Get a ready-to-wear shopping list of pieces that just work.</span>
-      </li>
-      <li style="display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 1.5;">
-        <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--color-accent-200); display: flex; align-items: center; justify-content: center; margin-top: 1px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-        <span>Stop dreading the wardrobe and get dressed with real confidence.</span>
-      </li>
+        <span>${t}</span>
+      </li>`).join("\n      ")}
     </ul>
   </section>
 
@@ -78,21 +84,15 @@
     <span class="kicker" style="margin-bottom: 12px;">How it works</span>
     <h2 style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(32px, 3.8vw, 48px); line-height: 1.08; letter-spacing: -0.015em; margin: 0; max-width: 20ch;">Three easy steps to an outfit that works.</h2>
     <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 36px); margin-top: clamp(32px, 4vw, 52px);">
-      <div>
-        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 26px; color: var(--color-accent-700); margin-bottom: 20px;">1</div>
-        <h3 style="font-family: var(--font-heading); font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0;">Find your shape</h3>
-        <p style="font-size: 15.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">Answer a few quick questions — it's the relationship between your measurements, not the numbers, that names your shape.</p>
-      </div>
-      <div>
-        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 26px; color: var(--color-accent-700); margin-bottom: 20px;">2</div>
-        <h3 style="font-family: var(--font-heading); font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0;">See your styling tips</h3>
-        <p style="font-size: 15.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">Get the simple ways to flatter it, framed as what to do — never what to avoid. Proportion and balance, made obvious.</p>
-      </div>
-      <div>
-        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 26px; color: var(--color-accent-700); margin-bottom: 20px;">3</div>
-        <h3 style="font-family: var(--font-heading); font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0;">Try the instant wins</h3>
-        <p style="font-size: 15.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">A short list of pieces that just work for you — ready to pull on tomorrow morning without a second thought.</p>
-      </div>
+      ${[
+        ["1", "Find your shape", "Answer a few quick questions — it's the relationship between your measurements, not the numbers, that names your shape."],
+        ["2", "See your styling tips", "Get the simple ways to flatter it, framed as what to do — never what to avoid. Proportion and balance, made obvious."],
+        ["3", "Try the instant wins", "A short list of pieces that just work for you — ready to pull on tomorrow morning without a second thought."]
+      ].map(([n, h, p]) => `<div>
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 26px; color: var(--color-accent-700); margin-bottom: 20px;">${n}</div>
+        <h3 style="font-family: var(--font-heading); font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0;">${h}</h3>
+        <p style="font-size: 15.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">${p}</p>
+      </div>`).join("\n      ")}
     </div>
   </section>
 
@@ -132,3 +132,31 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+`;
+
+/* ── Result page (one per shape) ──────────────────────────────────────── */
+const resultPage = (key) => {
+  const nm = NAMES[key];
+  return `<!DOCTYPE html>
+<html lang="en">
+${head(`You're ${/^[aeiou]/i.test(nm) ? "an" : "a"} ${nm} — Dressing for Your Shape`, `Your ${nm} body-shape styling guide from Rita Roumieh — what to wear, what to skip, and the full playbook.`)}
+<body data-shape="${key}">
+  <nav class="nav">
+    <span class="nav-brand"><a href="index.html">Rita Roumieh</a></span>
+    <span class="nav-sub">Image &amp; Style</span>
+  </nav>
+  <main id="result-root"></main>
+  <script src="assets/shapes-data.js"></script>
+  <script src="assets/result.js"></script>
+</body>
+</html>
+`;
+};
+
+writeFileSync(new URL("./index.html", import.meta.url), landing);
+let count = 1;
+for (const key of ORDER) {
+  writeFileSync(new URL(`./${key}.html`, import.meta.url), resultPage(key));
+  count++;
+}
+console.log(`Built index.html + ${ORDER.length} result pages: ${ORDER.join(", ")}`);
