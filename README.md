@@ -26,23 +26,21 @@ category so the on-page result is a teaser and the paid guide holds the rest.
 
 ## Files
 
+It's a single self-contained file:
+
 | Path | Purpose |
 | --- | --- |
-| `index.html` | The whole page: inlined design-system tokens, component styles, markup, and the opt-in modal logic (vanilla JS). |
-| `fonts/Cochin.ttf` | Headline/body serif (used throughout). |
-| `fonts/PinyonScript-Regular.ttf` | Decorative English-roundhand script accent. |
-| `fonts/PinyonScript-OFL.txt` | SIL Open Font License for Pinyon Script. |
+| `index.html` | The whole page — inlined design-system tokens, component styles, markup, the quiz + result logic (vanilla JS), and the parametric SVG body-shape silhouettes. Fonts load from Google Fonts. |
 
 ## Run / deploy
 
-It's a static page — open `index.html` directly, or serve the folder:
+Open `index.html` directly, or serve it:
 
 ```sh
 python3 -m http.server 8000   # then visit http://localhost:8000
 ```
 
-Deploy by uploading the folder to any static host (Netlify, Vercel, GitHub
-Pages, S3, …). Keep `index.html` and the `fonts/` folder together.
+Deploy the single file to any static host (Vercel, Netlify, GitHub Pages, S3, …).
 
 ## Wiring it up (two `TODO`s)
 
@@ -72,12 +70,14 @@ the burgundy palette via `currentColor`, and add no image requests.
 
 ## Design notes
 
-- **Palette & type** mirror the source design: light cocoa ground (`#F5EFE8`),
-  burgundy accent (`#4A0E1B`), Cochin serif headings.
-- **Script accent** — the source used Adobe's proprietary *Bickham Script Pro*.
-  It's replaced here with **Pinyon Script** (SIL OFL), a license-clean formal
-  roundhand that closely matches the original for the two decorative phrases
-  ("shape" in the headline and "Your Shape" on the guide cover).
+- **Palette** mirrors the source design: light cocoa ground (`#F5EFE8`),
+  burgundy accent (`#4A0E1B`).
+- **Type** — the source used Apple's *Cochin* and Adobe's *Bickham Script Pro*,
+  both proprietary. They're replaced with license-clean Google Fonts:
+  **Cormorant Garamond** (elegant serif) for headings and body, and
+  **Pinyon Script** for the decorative script accent ("shape" in the headline
+  and "Your Shape" on the guide cover). To restore exact Cochin, self-host the
+  licensed font and swap the `--font-heading` / `--font-body` values.
 - **Guide cover** — the source had an empty image slot; it's rendered here as a
   styled cover mockup. Drop in a real cover image by replacing the
   `<figure class="cover">…</figure>` block with an `<img>`.
