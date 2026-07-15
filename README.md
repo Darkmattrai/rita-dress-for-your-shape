@@ -6,10 +6,12 @@ shape with a personalised styling teaser and the **$47** guide offer.
 
 ## Flow
 
-1. **`index.html`** — landing page. The CTA opens an opt-in modal that collects
-   first name, email, phone, Instagram, and the visitor's body shape
-   (**Hourglass, Rectangle, Oval, Inverted Triangle, Pear**), each shown as an
-   on-brand silhouette.
+1. **`index.html`** — landing page. The CTA opens a 4-step **shape quiz**: a
+   live-morphing silhouette with three sliders (shoulders · waist · hips), then
+   a contact step (first name, email, phone, Instagram). The body shape
+   (**Hourglass, Rectangle, Oval, Inverted Triangle, Pear**) is inferred from
+   the *relationship* between the three widths — see `classify()` in
+   `assets/app.js` — not from any single absolute measurement.
 2. On submit it captures the lead (agenci.io), fires tracking, and redirects to
    that shape's result page.
 3. **`{shape}.html`** — a standalone result page: summary of the shape, one

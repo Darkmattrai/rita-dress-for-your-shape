@@ -110,24 +110,63 @@ ${head("Dressing for Your Shape — Rita Rouhana", "Take the free 60-second quiz
   </section>
 
   <div id="form-overlay" hidden data-close-form class="overlay">
-    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="form-title">
-      <button type="button" data-close-form aria-label="Close" class="btn btn-icon" style="position: absolute; top: 16px; right: 16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-      <h2 id="form-title" style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(28px, 5vw, 36px); line-height: 1.1; margin: 0; padding-right: 32px;">Get your free shape result</h2>
-      <p style="font-size: 15.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 12px 0 0;">Answer below and I'll show you what to wear for your shape — and send your starter guide straight to your inbox.</p>
-      <form id="optin-form" style="display: grid; gap: 14px; margin-top: 24px;">
-        <div class="field"><label for="f-name">First name</label><input class="input" id="f-name" name="name" type="text" required placeholder="Rita" autocomplete="given-name" /></div>
-        <div class="field"><label for="f-email">Email address</label><input class="input" id="f-email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" /></div>
-        <div class="field"><label for="f-phone">Phone number</label><input class="input" id="f-phone" name="phone" type="tel" required placeholder="+44 7000 000000" autocomplete="tel" /></div>
-        <div class="field"><label for="f-insta">Instagram account</label><input class="input" id="f-insta" name="instagram" type="text" required placeholder="@yourhandle" /></div>
-        <fieldset class="shape-field">
-          <legend>What represents your body the most?</legend>
-          <div id="shape-grid" class="shape-grid"></div>
-          <input type="hidden" name="shape" id="shape-input" />
-          <p id="shape-error" class="shape-error" hidden>Tap the shape that's closest to you to continue.</p>
-        </fieldset>
-        <button type="submit" class="btn btn-primary btn-block" style="min-height: 52px; margin-top: 6px;">Show me my result</button>
-        <p style="font-size: 13px; line-height: 1.5; text-align: center; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin: 4px 0 0;">One warm email a week. Unsubscribe any time.</p>
-      </form>
+    <div class="dialog quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
+      <button type="button" data-close-form aria-label="Close" class="btn btn-icon" style="position: absolute; top: 16px; right: 16px; z-index: 2;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+
+      <div class="quiz">
+        <div class="quiz-progress" id="quiz-progress" aria-hidden="true"></div>
+
+        <div class="quiz-stage">
+          <div class="quiz-figure">
+            <div class="quiz-sil" id="quiz-sil"></div>
+            <p class="quiz-hint" id="quiz-hint">Shape it to match you</p>
+          </div>
+
+          <div class="quiz-steps">
+            <div class="quiz-step" data-step="1">
+              <span class="quiz-kicker">Step 1 of 4</span>
+              <h2 id="quiz-title" class="quiz-h">Your shoulders</h2>
+              <p class="quiz-sub">How broad are your shoulders and bust? Slide until the figure looks like you.</p>
+              <input type="range" class="range" id="sl-sh" min="0" max="100" value="50" aria-label="Shoulder width" />
+              <div class="range-ends"><span>Narrow</span><span>Broad</span></div>
+              <div class="quiz-nav"><span></span><button type="button" class="btn btn-primary" data-next>Next</button></div>
+            </div>
+
+            <div class="quiz-step" data-step="2" hidden>
+              <span class="quiz-kicker">Step 2 of 4</span>
+              <h2 class="quiz-h">Your waist</h2>
+              <p class="quiz-sub">How defined is your waist compared with your shoulders and hips?</p>
+              <input type="range" class="range" id="sl-wa" min="0" max="100" value="50" aria-label="Waist width" />
+              <div class="range-ends"><span>Very defined</span><span>Straight / full</span></div>
+              <div class="quiz-nav"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="button" class="btn btn-primary" data-next>Next</button></div>
+            </div>
+
+            <div class="quiz-step" data-step="3" hidden>
+              <span class="quiz-kicker">Step 3 of 4</span>
+              <h2 class="quiz-h">Your hips</h2>
+              <p class="quiz-sub">How wide are your hips and seat?</p>
+              <input type="range" class="range" id="sl-hi" min="0" max="100" value="50" aria-label="Hip width" />
+              <div class="range-ends"><span>Narrow</span><span>Wide</span></div>
+              <div class="quiz-nav"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="button" class="btn btn-primary" data-next>Next</button></div>
+            </div>
+
+            <div class="quiz-step" data-step="4" hidden>
+              <span class="quiz-kicker">Last step</span>
+              <h2 class="quiz-h">Where should I send it?</h2>
+              <p class="quiz-sub">Your result and starter guide land in your inbox in seconds.</p>
+              <form id="optin-form" style="display: grid; gap: 12px; margin-top: 16px;">
+                <div class="field"><label for="f-name">First name</label><input class="input" id="f-name" name="name" type="text" required placeholder="Rita" autocomplete="given-name" /></div>
+                <div class="field"><label for="f-email">Email address</label><input class="input" id="f-email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" /></div>
+                <div class="field"><label for="f-phone">Phone number</label><input class="input" id="f-phone" name="phone" type="tel" required placeholder="+44 7000 000000" autocomplete="tel" /></div>
+                <div class="field"><label for="f-insta">Instagram account</label><input class="input" id="f-insta" name="instagram" type="text" required placeholder="@yourhandle" /></div>
+                <input type="hidden" name="shape" id="shape-input" />
+                <div class="quiz-nav" style="margin-top: 4px;"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="submit" class="btn btn-primary">Show me my result</button></div>
+                <p style="font-size: 13px; line-height: 1.5; text-align: center; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin: 2px 0 0;">One warm email a week. Unsubscribe any time.</p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
