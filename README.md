@@ -14,9 +14,16 @@ shape with a personalised styling teaser and the **$47** guide offer.
    `assets/app.js` — not from any single absolute measurement.
 2. On submit it captures the lead (agenci.io), fires tracking, and redirects to
    that shape's result page.
-3. **`{shape}.html`** — a standalone result page: summary of the shape, one
-   thing to *Start wearing* per category and a few to *Skip for now*, then the
-   **$47** upsell with a checkout button. Personalised with the visitor's name.
+3. **`{shape}.html`** — a data-driven result page rendered by one reusable
+   template (`assets/result.js`) from the shape's record in
+   `assets/shapes-data.js`. Sections: hero → characteristics → annotated
+   proportions → main styling goal (work-with / be-careful) → "styles to be
+   careful with" across five clothing categories → guide transition → complete-
+   guide contents → transformation → final CTA → sticky mobile CTA → footer.
+   Clothing illustrations are **labelled placeholders**; drop a real asset in
+   and add its path (`image: "images/body-shapes/…"`) to that item in
+   `shapes-data.js` and it renders in place — no other change needed. The CTA
+   destination is data-driven via `config.js` (`checkoutUrl`).
 
 The five write-ups are distilled from Rita's body-shape guide series, one
 recommendation per category so the page teases and the paid guide holds the rest.

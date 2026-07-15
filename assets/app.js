@@ -14,6 +14,7 @@
   var sil = document.getElementById("quiz-sil");
   var hintEl = document.getElementById("quiz-hint");
   var progressEl = document.getElementById("quiz-progress");
+  var readoutEl = document.getElementById("quiz-readout");
   var slSh = document.getElementById("sl-sh");
   var slWa = document.getElementById("sl-wa");
   var slHi = document.getElementById("sl-hi");
@@ -85,12 +86,26 @@
     progressEl.innerHTML = html;
   }
 
+  // numeric "nudge" shown on the final step — a personalised read-out of the
+  // three proportions the visitor set, so the result feels calculated.
+  function renderReadout() {
+    if (!readoutEl) return;
+    var rows = [["Shoulders", +slSh.value], ["Waist", +slWa.value], ["Hips", +slHi.value]];
+    readoutEl.innerHTML =
+      '<span class="ro-label">Your proportions read</span>' +
+      '<div class="ro-bars">' + rows.map(function (r) {
+        return '<div class="ro-row"><span class="ro-name">' + r[0] + '</span>' +
+          '<span class="ro-track"><span class="ro-fill" style="width:' + r[1] + '%"></span></span>' +
+          '<span class="ro-num">' + r[1] + '</span></div>';
+      }).join("") + '</div>';
+  }
+
   function goStep(n) {
     if (n < 1 || n > TOTAL) return;
     current = n;
     steps.forEach(function (st) { st.hidden = (+st.getAttribute("data-step") !== n); });
     renderProgress();
-    if (n === TOTAL) { var f = document.getElementById("f-name"); if (f) f.focus(); }
+    if (n === TOTAL) { renderReadout(); var f = document.getElementById("f-name"); if (f) f.focus(); }
   }
 
   overlay.querySelectorAll("[data-next]").forEach(function (b) {

@@ -6,6 +6,17 @@
 (function () {
   var cfg = window.RITA_CONFIG || {};
 
+  // Self-referential canonical (correct on any domain; drops query strings so
+  // duplicates aren't indexed).
+  try {
+    if (!document.querySelector('link[rel="canonical"]')) {
+      var l = document.createElement("link");
+      l.rel = "canonical";
+      l.href = location.origin + location.pathname;
+      document.head.appendChild(l);
+    }
+  } catch (e) {}
+
   // ── Google Tag Manager ──────────────────────────────────────────────
   window.dataLayer = window.dataLayer || [];
   if (cfg.gtmId) {

@@ -16,6 +16,9 @@ const head = (title, desc) => `<head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${desc}">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${desc}">
+<meta property="og:type" content="website">
 <link rel="preload" href="fonts/cochin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/app.css">
 <!-- Integrations (fill ids in assets/config.js). Loaded early so tags fire on every page. -->
@@ -154,6 +157,7 @@ ${head("Dressing for Your Shape — Rita Rouhana", "Take the free 60-second quiz
               <span class="quiz-kicker">Last step</span>
               <h2 class="quiz-h">Where should I send it?</h2>
               <p class="quiz-sub">Your result and starter guide land in your inbox in seconds.</p>
+              <div class="quiz-readout" id="quiz-readout" aria-hidden="true"></div>
               <form id="optin-form" style="display: grid; gap: 12px; margin-top: 16px;">
                 <div class="field"><label for="f-name">First name</label><input class="input" id="f-name" name="name" type="text" required placeholder="Rita" autocomplete="given-name" /></div>
                 <div class="field"><label for="f-email">Email address</label><input class="input" id="f-email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" /></div>
@@ -185,11 +189,10 @@ ${head(`You're ${art} ${nm} — Dressing for Your Shape`, `Your ${nm} body-shape
 <body data-shape="${key}">
   <nav class="nav">
     <span class="nav-brand"><a href="index.html">Rita Rouhana</a></span>
-    <span class="nav-sub">Image &amp; Style</span>
+    <a class="nav-sub" href="index.html" data-analytics="retake-quiz" style="text-decoration: none;">Retake the quiz</a>
   </nav>
   <main id="result-root"></main>
   <script src="assets/shapes-data.js"></script>
-  <script src="assets/garments.js"></script>
   <script src="assets/result.js"></script>
 </body>
 </html>
