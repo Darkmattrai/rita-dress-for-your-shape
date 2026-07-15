@@ -1,5 +1,5 @@
 /* ────────────────────────────────────────────────────────────────────────
-   Rita Roumieh — Dressing for Your Shape
+   Rita Rouhana — Dressing for Your Shape
    ONE place to configure every integration. Fill these in, redeploy, done.
    ──────────────────────────────────────────────────────────────────────── */
 window.RITA_CONFIG = {

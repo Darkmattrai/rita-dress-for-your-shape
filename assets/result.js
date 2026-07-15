@@ -124,7 +124,7 @@
         '<figure class="mockup-cover">' +
           '<span class="mc-kicker">The Complete Guide</span>' +
           '<div><h3 class="mc-title">Dressing for<span class="script">Your Shape</span></h3><span class="mc-rule"></span></div>' +
-          '<div><div class="mc-byline">Rita Roumieh</div><div class="mc-sub">Image &amp; Style</div></div>' +
+          '<div><div class="mc-byline">Rita Rouhana</div><div class="mc-sub">Image &amp; Style</div></div>' +
         '</figure>' +
       '</div>' +
       '<div class="mockup-copy">' +
@@ -137,7 +137,7 @@
 
     // footer
     '<footer class="wrap result-foot">' +
-      '<div class="name">Rita Roumieh</div><div class="sub">Image &amp; Style</div>' +
+      '<div class="name">Rita Rouhana</div><div class="sub">Image &amp; Style</div>' +
       '<a class="retake" href="index.html">← Retake the shape quiz</a>' +
     '</footer>' +
 

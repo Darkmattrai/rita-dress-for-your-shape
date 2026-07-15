@@ -26,11 +26,11 @@ const head = (title, desc) => `<head>
 /* ── Landing page ─────────────────────────────────────────────────────── */
 const landing = `<!DOCTYPE html>
 <html lang="en">
-${head("Dressing for Your Shape — Rita Roumieh", "Take the free 60-second quiz to discover your body shape and exactly what to wear for it — from Rita Roumieh, Image &amp; Style.")}
+${head("Dressing for Your Shape — Rita Rouhana", "Take the free 60-second quiz to discover your body shape and exactly what to wear for it — from Rita Rouhana, Image &amp; Style.")}
 <body>
 
   <nav class="nav">
-    <span class="nav-brand">Rita Roumieh</span>
+    <span class="nav-brand">Rita Rouhana</span>
     <span class="nav-sub">Image &amp; Style</span>
   </nav>
 
@@ -54,7 +54,7 @@ ${head("Dressing for Your Shape — Rita Roumieh", "Take the free 60-second quiz
               <span style="display:block; width: 40px; height: 1px; margin: 14px auto; background: color-mix(in srgb, #F5EFE8 55%, transparent);"></span>
             </div>
             <div>
-              <div style="font-family: var(--font-heading); font-size: 15px;">Rita Roumieh</div>
+              <div style="font-family: var(--font-heading); font-size: 15px;">Rita Rouhana</div>
               <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-300); margin-top: 4px;">Image &amp; Style</div>
             </div>
           </figure>
@@ -104,7 +104,7 @@ ${head("Dressing for Your Shape — Rita Roumieh", "Take the free 60-second quiz
       <h2 style="font-family: var(--font-heading); font-weight: 400; font-size: clamp(32px, 4vw, 52px); line-height: 1.08; letter-spacing: -0.015em; margin: 0 auto; max-width: 22ch;">Your shape was never the problem. It just needed the right pieces.</h2>
       <p style="font-size: 16px; line-height: 1.6; color: color-mix(in srgb, #F5EFE8 82%, transparent); margin: 20px auto 0; max-width: 52ch;">Take the free quiz and see what suits you in the next 60 seconds — then grab the full guide when you're ready.</p>
       <button type="button" data-open-form class="btn btn-primary" style="margin-top: 28px; background: #F5EFE8; color: var(--color-accent);">Find my shape — it's free</button>
-      <p style="font-family: var(--font-heading); font-size: 20px; margin: 34px 0 0;">Rita Roumieh</p>
+      <p style="font-family: var(--font-heading); font-size: 20px; margin: 34px 0 0;">Rita Rouhana</p>
       <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-300); margin: 6px 0 0;">Image &amp; Style</p>
     </div>
   </section>
@@ -142,10 +142,10 @@ const resultPage = (key) => {
   const nm = NAMES[key], art = ARTICLES[key];
   return `<!DOCTYPE html>
 <html lang="en">
-${head(`You're ${art} ${nm} — Dressing for Your Shape`, `Your ${nm} body-shape styling guide from Rita Roumieh — what to wear, what to skip, and the full playbook.`)}
+${head(`You're ${art} ${nm} — Dressing for Your Shape`, `Your ${nm} body-shape styling guide from Rita Rouhana — what to wear, what to skip, and the full playbook.`)}
 <body data-shape="${key}">
   <nav class="nav">
-    <span class="nav-brand"><a href="index.html">Rita Roumieh</a></span>
+    <span class="nav-brand"><a href="index.html">Rita Rouhana</a></span>
     <span class="nav-sub">Image &amp; Style</span>
   </nav>
   <main id="result-root"></main>

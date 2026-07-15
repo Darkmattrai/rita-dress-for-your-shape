@@ -1,6 +1,6 @@
 # Dressing for Your Shape — Dynamic Lead Magnet
 
-A quiz-style lead magnet for **Rita Roumieh · Image & Style**. A visitor opts
+A quiz-style lead magnet for **Rita Rouhana · Image & Style**. A visitor opts
 in, picks their body shape, and lands on a **dedicated result page** for that
 shape with a personalised styling teaser and the **$47** guide offer.
 
