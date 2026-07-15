@@ -85,6 +85,11 @@ Deploy the whole folder to any static host (Vercel, Netlify, …). On Vercel,
 `hourglass.html` serves at `/hourglass`, etc. Point the GoDaddy domain at the
 host's nameservers / add the `A` / `CNAME` records it gives you.
 
+This repo is connected to Vercel (`rita-dress-for-your-shape.vercel.app`) and
+deploys automatically on every push to `main`. It is a self-contained static
+site — no build step, and every asset (CSS, JS, and the brand fonts) is served
+from this repo, so the live site never depends on an external CDN.
+
 ## Fonts
 
 The real brand fonts — **Cochin** (Apple) and **Bickham Script Pro** (Adobe) —
