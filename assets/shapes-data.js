@@ -40,7 +40,9 @@ window.SHAPES = {
     wear: {
       necklines: { name: "V-neck or scoop", explanation: "Opens the upper body and echoes your curves, keeping the eye moving down toward your waist." },
       trousers: { name: "High-waisted straight or wide-leg", explanation: "Sits at your natural waist and falls in a long, clean line that follows your shape." },
-      dresses: { name: "Wrap or belted dress", explanation: "Marks your waist and skims your curves — the most flattering line for your shape." }
+      dresses: { name: "Wrap or belted dress", explanation: "Marks your waist and skims your curves — the most flattering line for your shape." },
+      jackets: { name: "Nipped-waist or belted blazer", explanation: "Follows your waist and keeps the tailored line close to your curves." },
+      shirts: { name: "Fitted or tucked-in shirt", explanation: "Defines the waist instead of skimming past it." }
     },
     avoid: {
       necklines: [
@@ -98,7 +100,9 @@ window.SHAPES = {
     wear: {
       necklines: { name: "Boat or embellished neckline", explanation: "Adds width and interest across the shoulders to balance your fuller hips." },
       trousers: { name: "Dark straight or bootcut trousers", explanation: "Skim past the hip and thigh and lengthen the whole lower half." },
-      dresses: { name: "Fit-and-flare / A-line dress", explanation: "Defines your waist and glides over the hips instead of clinging to them." }
+      dresses: { name: "Fit-and-flare / A-line dress", explanation: "Defines your waist and glides over the hips instead of clinging to them." },
+      jackets: { name: "Structured jacket ending above the hip", explanation: "Adds shape up top and finishes above the fullest point." },
+      shirts: { name: "Detailed or lighter-toned top", explanation: "Brings colour and interest to the upper body to balance the hips." }
     },
     avoid: {
       necklines: [
@@ -156,7 +160,9 @@ window.SHAPES = {
     wear: {
       necklines: { name: "Sweetheart or cowl neckline", explanation: "Adds softness and curve up top where the frame reads straight." },
       trousers: { name: "Paperbag or wide-leg with a defined waist", explanation: "Cinches in a waist and builds shape into a straight line." },
-      dresses: { name: "Belted or peplum dress", explanation: "Carves out a waist and adds the dimension a straight frame thrives on." }
+      dresses: { name: "Belted or peplum dress", explanation: "Carves out a waist and adds the dimension a straight frame thrives on." },
+      jackets: { name: "Belted or peplum jacket", explanation: "Builds a waist and adds shape to a straight frame." },
+      shirts: { name: "Wrap or ruched top", explanation: "Creates the curve and definition a straight torso lacks." }
     },
     avoid: {
       necklines: [
@@ -214,7 +220,9 @@ window.SHAPES = {
     wear: {
       necklines: { name: "V-neck or scoop", explanation: "Softens and narrows the shoulder line, drawing the eye inward and down." },
       trousers: { name: "Wide-leg, pleated or printed trousers", explanation: "Adds welcome volume to the lower half to balance broader shoulders." },
-      dresses: { name: "A-line or full-skirt dress", explanation: "Builds shape below the waist so top and bottom read in balance." }
+      dresses: { name: "A-line or full-skirt dress", explanation: "Builds shape below the waist so top and bottom read in balance." },
+      jackets: { name: "Soft, unstructured jacket", explanation: "Keeps the shoulder line clean rather than building it up." },
+      shirts: { name: "V-neck top with a simple shoulder", explanation: "Draws the eye down and narrows a broad upper body." }
     },
     avoid: {
       necklines: [
@@ -272,7 +280,9 @@ window.SHAPES = {
     wear: {
       necklines: { name: "Deep V or open neckline", explanation: "Draws the eye up and lengthens the torso into one long line." },
       trousers: { name: "Straight-leg, flat-front trousers", explanation: "Keep a clean, uninterrupted line from waist to hem." },
-      dresses: { name: "Empire-line or soft A-line dress", explanation: "Falls from above the waist and skims the midsection in one clean sweep." }
+      dresses: { name: "Empire-line or soft A-line dress", explanation: "Falls from above the waist and skims the midsection in one clean sweep." },
+      jackets: { name: "Long-line open jacket", explanation: "Creates an unbroken vertical line and skims the middle." },
+      shirts: { name: "Softly draping, longer top", explanation: "Glides over the midsection instead of clinging to it." }
     },
     avoid: {
       necklines: [

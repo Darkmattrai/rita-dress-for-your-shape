@@ -351,6 +351,7 @@ figure { margin: 0; }
 .vsl-play svg { margin-left: 4px; }
 .vsl-ph-t { font-family: var(--font-heading); font-size: clamp(18px, 2.4vw, 22px); }
 .vsl-ph-s { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-300); }
+.rs-vsl-cta { margin-top: clamp(22px, 3vw, 30px); min-height: 54px; font-size: 17px; }
 
 .rs-pieces-intro { padding-bottom: 0; }
 .rs-piece { padding-top: clamp(10px, 2vw, 18px); }
