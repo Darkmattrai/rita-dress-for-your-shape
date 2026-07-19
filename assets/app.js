@@ -18,6 +18,8 @@
   var slSh = document.getElementById("sl-sh");
   var slWa = document.getElementById("sl-wa");
   var slHi = document.getElementById("sl-hi");
+  var ccInput = document.getElementById("f-cc");
+  var countryInput = document.getElementById("country-input");
   var steps = Array.prototype.slice.call(overlay.querySelectorAll(".quiz-step"));
   var TOTAL = steps.length;
   var current = 1;
@@ -44,18 +46,18 @@
   function toWa(v) { return 18 + (v / 100) * 22; } // 18‥40
   function toHi(v) { return 20 + (v / 100) * 20; } // 20‥40
 
-  // ── Classify from the RELATIONSHIP between the three widths ─────────────
-  //   Oval        → waist is the widest point
-  //   Hourglass   → shoulders ≈ hips AND waist clearly nipped in
-  //   Rectangle   → shoulders ≈ hips AND little waist definition
-  //   Pear        → hips notably wider than shoulders
-  //   Inverted    → shoulders notably wider than hips
-  function classify(sh, wa, hi) {
-    var balance = sh - hi;                 // + = broader up top
-    var waistDef = (sh + hi) / 2 - wa;     // how much the waist nips in
-    if (wa >= sh + 2 && wa >= hi + 2) return "oval"; // waist clearly the widest
-    if (Math.abs(balance) <= 3) return waistDef >= 5 ? "hourglass" : "rectangle";
-    return balance < 0 ? "pear" : "inverted-triangle";
+  // ── Classify from the RELATIONSHIP between the three slider values ──────
+  // S, W, H are the raw slider readings (0–100): shoulders/bust, waist
+  // (0 = very defined, 100 = straight/full) and hips. A body shape is defined
+  // by how the three COMPARE, not by any single measurement — so every rule
+  // below is a comparison. Evaluated top to bottom; the first match wins.
+  // Thresholds are in slider points and are safe to tune.
+  function classify(S, W, H) {
+    var waistNip = (S + H) / 2 - W;                    // how far the waist comes in vs the frame
+    if (W >= Math.max(S, H) + 6) return "oval";        // waist is the fullest point
+    if (H - S >= 12) return "pear";                    // hips clearly wider than shoulders
+    if (S - H >= 12) return "inverted-triangle";       // shoulders clearly wider than hips
+    return waistNip >= 12 ? "hourglass" : "rectangle"; // balanced frame → defined waist or straight
   }
 
   // Describe the read-out WITHOUT naming the shape (the name is the reward,
@@ -73,7 +75,7 @@
     sil.innerHTML = '<svg viewBox="0 0 120 200" fill="none" aria-hidden="true" style="width:100%;height:auto;display:block">' +
       '<circle cx="60" cy="26" r="13" fill="currentColor"/>' +
       '<path d="' + silPath(sh, wa, hi) + '" fill="currentColor"/></svg>';
-    var shape = classify(sh, wa, hi);
+    var shape = classify(+slSh.value, +slWa.value, +slHi.value);
     shapeInput.value = shape;
     hintEl.textContent = HINTS[shape] || "";
   }
@@ -115,12 +117,35 @@
     b.addEventListener("click", function () { goStep(current - 1); });
   });
 
+  // ── Auto-detect the visitor's country so the phone field pre-fills the
+  //    dialing code (they just type their local number). IP-based, with a
+  //    fallback endpoint; fails quietly and leaves the field editable. ──────
+  var geoTried = false;
+  function normCode(c) { c = String(c || "").trim(); return c ? (c.charAt(0) === "+" ? c : "+" + c) : ""; }
+  function applyGeo(code, country) {
+    if (code && ccInput && !ccInput.value) ccInput.value = code;
+    if (country && countryInput && !countryInput.value) countryInput.value = country;
+  }
+  function detectCountry() {
+    if (geoTried) return;
+    geoTried = true;
+    fetch("https://ipwho.is/").then(function (r) { return r.json(); }).then(function (d) {
+      if (d && d.success && d.calling_code) applyGeo(normCode(d.calling_code), d.country_code || d.country);
+      else throw new Error("no geo");
+    }).catch(function () {
+      fetch("https://ipapi.co/json/").then(function (r) { return r.json(); }).then(function (d) {
+        if (d && d.country_calling_code) applyGeo(normCode(d.country_calling_code), d.country_code || d.country_name);
+      }).catch(function () {});
+    });
+  }
+
   function openForm() {
     lastFocused = document.activeElement;
     overlay.hidden = false;
     document.body.style.overflow = "hidden";
     goStep(1);
     draw();
+    detectCountry();
     if (window.ritaTrack) window.ritaTrack("optin_open");
   }
   function closeForm() {
@@ -152,11 +177,14 @@
     e.preventDefault();
     draw(); // make sure the shape reflects the final slider positions
     var fd = new FormData(form);
+    var cc = (fd.get("country_code") || "").trim();
+    var num = (fd.get("phone") || "").trim();
     var lead = {
       name: (fd.get("name") || "").trim(),
       email: (fd.get("email") || "").trim(),
-      phone: (fd.get("phone") || "").trim(),
+      phone: (cc + " " + num).trim(),
       instagram: (fd.get("instagram") || "").trim(),
+      country: (fd.get("country") || "").trim(),
       shape: shapeInput.value || "rectangle"
     };
     captureLead(lead);

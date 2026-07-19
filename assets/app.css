@@ -89,6 +89,9 @@ figure { margin: 0; }
 }
 .input:hover { border-color: color-mix(in srgb, var(--color-text) 45%, transparent); }
 .input:focus-visible { border-color: var(--color-accent); outline-offset: 0; }
+.phone-row { display: flex; gap: 10px; }
+.phone-cc { flex: 0 0 84px; text-align: center; padding-inline: 8px; }
+.phone-num { flex: 1; min-width: 0; }
 
 /* ── shape selector (landing modal) ── */
 .shape-field { border: 0; padding: 0; margin: 4px 0 0; min-width: 0; }

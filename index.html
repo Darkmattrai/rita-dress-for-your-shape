@@ -163,9 +163,10 @@
               <form id="optin-form" style="display: grid; gap: 12px; margin-top: 16px;">
                 <div class="field"><label for="f-name">First name</label><input class="input" id="f-name" name="name" type="text" required placeholder="Rita" autocomplete="given-name" /></div>
                 <div class="field"><label for="f-email">Email address</label><input class="input" id="f-email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" /></div>
-                <div class="field"><label for="f-phone">Phone number</label><input class="input" id="f-phone" name="phone" type="tel" required placeholder="+44 7000 000000" autocomplete="tel" /></div>
+                <div class="field"><label for="f-phone">Phone number</label><div class="phone-row"><input class="input phone-cc" id="f-cc" name="country_code" type="text" inputmode="tel" required placeholder="+…" aria-label="Country dialing code" autocomplete="tel-country-code" /><input class="input phone-num" id="f-phone" name="phone" type="tel" required placeholder="70 000 000" autocomplete="tel-national" /></div></div>
                 <div class="field"><label for="f-insta">Instagram account</label><input class="input" id="f-insta" name="instagram" type="text" required placeholder="@yourhandle" /></div>
                 <input type="hidden" name="shape" id="shape-input" />
+                <input type="hidden" name="country" id="country-input" />
                 <div class="quiz-nav" style="margin-top: 4px;"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="submit" class="btn btn-primary">Show me my result</button></div>
                 <p style="font-size: 13px; line-height: 1.5; text-align: center; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin: 2px 0 0;">One warm email a week. Unsubscribe any time.</p>
               </form>
