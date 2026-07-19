@@ -1,9 +1,9 @@
 /* ────────────────────────────────────────────────────────────────────────
    One reusable result-page renderer, powered by the shape's record in
-   shapes-data.js. Each page carries <body data-shape="pear">. Sections follow
-   the brief: hero → characteristics → annotated figure → styling goal →
-   what to avoid (5 categories) → guide transition → guide contents →
-   transformation → final CTA → sticky mobile CTA → footer.
+   shapes-data.js. Each page carries <body data-shape="pear">. Lean layout:
+   shape summary (what makes it) → short VSL + pitch → a few clothing pieces
+   (what to wear vs be careful with) → complete-guide pitch → footer + sticky
+   CTA. The full styling breakdown is delivered as the emailed PDF.
    Needs config.js, analytics.js, shapes-data.js loaded first + #result-root.
    ──────────────────────────────────────────────────────────────────────── */
 (function () {
@@ -73,162 +73,101 @@
     '</figure>';
   }
 
-  // ── shared, shape-agnostic content ──
-  var CAT_ORDER = ["necklines", "trousers", "jackets", "shirts", "dresses"];
-  var CAT_TITLE = { necklines: "Necklines", trousers: "Trousers", jackets: "Jackets", shirts: "Shirts", dresses: "Dresses" };
-  var CAT_INTRO = {
-    necklines: "The wrong neckline can add width, close off the upper body or pull attention away from the areas you want to emphasise.",
-    trousers: "Trouser shape, rise and pocket placement can change how the waist, hips and legs appear in relation to one another.",
-    jackets: "A jacket’s length, shoulder structure and waist placement can either support your proportions or interrupt them.",
-    shirts: "The cut and volume of a shirt determine whether your waist and upper body stay defined or become visually lost.",
-    dresses: "Dresses affect the whole silhouette at once, which makes waist placement, volume and overall shape especially important."
-  };
-  var GUIDE_GROUPS = [
-    { title: "Tops & upper body", items: ["4 additional necklines", "4 sleeve styles", "4 additional shirts", "1 knitwear recommendation"] },
-    { title: "Layers", items: ["4 additional jackets", "5 coat styles"] },
-    { title: "Bottoms", items: ["4 additional trousers", "4 jeans styles — includes what to avoid", "5 shorts styles — includes what to avoid", "5 skirt styles — includes what to avoid"] },
-    { title: "Dresses", items: ["4 additional dress styles"] }
-  ];
-  var TRANSFORM = [
-    "Understand why a piece works before you buy it",
-    "Shop with a clearer plan",
-    "Build outfits around your natural proportions",
-    "Stop relying on generic fashion rules"
-  ];
-
   var tick = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 
+  // The clothing pieces shown on the lean result page (each = one to wear +
+  // one to be careful with). The rest lives in the emailed guide.
+  var PIECES = [
+    { id: "necklines", title: "Necklines" },
+    { id: "trousers", title: "Trousers" },
+    { id: "dresses", title: "Dresses" }
+  ];
+
   // ── build sections ──
-  function heroSection() {
-    return '<header class="wrap result-hero2 reveal">' +
-      '<div class="result-hero2-copy">' +
-        '<span class="result-eyebrow">Your personal body-shape result</span>' +
+  // 1) Body-shape summary + what makes it that shape
+  function summarySection() {
+    var chars = s.characteristics.map(function (c) {
+      return '<li>' + tick + '<span>' + esc(c) + '</span></li>';
+    }).join("");
+    return '<header class="wrap rs-summary reveal">' +
+      '<div class="rs-summary-copy">' +
+        '<span class="result-eyebrow">Your body-shape result</span>' +
         '<h1 class="result-title">You’re ' + s.article + ' <span class="accent">' + esc(s.name) + '</span></h1>' +
         '<p class="result-summary">' + esc(s.heroSummary) + '</p>' +
-        '<p class="result-microcopy">Your result is based on the proportions you selected in the quiz.</p>' +
+        '<div class="rs-what">' +
+          '<h2 class="rs-what-h">What makes you ' + s.article + ' ' + esc(s.name) + '</h2>' +
+          '<ul class="rs-char">' + chars + '</ul>' +
+        '</div>' +
       '</div>' +
-      '<div class="result-hero2-figure">' +
+      '<div class="rs-figure">' +
         '<span class="result-badge"><span class="rb-label">Your shape</span><span class="rb-name">' + esc(s.name) + '</span></span>' +
         '<div class="figure-sil">' + silhouette() + '</div>' +
       '</div>' +
     '</header>';
   }
 
-  function characteristicsSection() {
-    var items = s.characteristics.map(function (c, i) {
-      return '<li class="char"><span class="char-n">' + ("0" + (i + 1)) + '</span><span class="char-t">' + esc(c) + '</span></li>';
+  // Embed the VSL if a URL is set (YouTube / Vimeo / .mp4); else a poster slot.
+  function videoEmbed() {
+    var url = (s.videoUrl || cfg.vslUrl || "").trim();
+    if (url) {
+      var yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);
+      if (yt) return '<iframe src="https://www.youtube.com/embed/' + yt[1] + '" title="Style video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+      var vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+      if (vm) return '<iframe src="https://player.vimeo.com/video/' + vm[1] + '" title="Style video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+      return '<video controls preload="metadata" playsinline src="' + esc(url) + '"></video>';
+    }
+    return '<div class="vsl-ph"><span class="vsl-play"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>' +
+      '<span class="vsl-ph-t">Your ' + esc(s.name) + ' style video</span>' +
+      '<span class="vsl-ph-s">Coming soon</span></div>';
+  }
+
+  // 2) Short VSL + pitch
+  function vslSection() {
+    return '<section class="wrap rs-vsl reveal">' +
+      '<span class="kicker">Watch this first</span>' +
+      '<h2 class="section-h">Your quick ' + esc(s.name) + ' styling breakdown</h2>' +
+      '<p class="section-lead">A short walk-through of how to dress your shape — and exactly what your complete guide covers.</p>' +
+      '<div class="vsl-frame">' + videoEmbed() + '</div>' +
+    '</section>';
+  }
+
+  // 3) One clothing piece = what to wear + what to be careful with
+  function pieceCard(kind, catId, item) {
+    var realSrc = item.image ? (BASE + item.image) : "";
+    var alt = (kind === "wear" ? "Recommended " : "To be careful with: ") + item.name.toLowerCase() + " for " + s.article + " " + s.name.toLowerCase();
+    var flag = kind === "wear" ? "Wear this" : "Be careful with";
+    return '<article class="rs-card rs-' + kind + '">' +
+      editorialImage(realSrc, alt, catId, "4 / 5") +
+      '<div class="rs-card-body"><span class="rs-flag rs-flag-' + kind + '">' + flag + '</span>' +
+      '<h4 class="rs-card-name">' + esc(item.name) + '</h4>' +
+      '<p class="rs-card-expl">' + esc(item.explanation) + '</p></div>' +
+    '</article>';
+  }
+  function piecesSection() {
+    var secs = PIECES.map(function (p) {
+      var wear = s.wear && s.wear[p.id];
+      var avoid = s.avoid[p.id] && s.avoid[p.id][0];
+      if (!wear || !avoid) return "";
+      return '<section class="wrap rs-piece reveal">' +
+        '<h2 class="rs-piece-h">' + esc(p.title) + '</h2>' +
+        '<div class="rs-piece-grid">' + pieceCard("wear", p.id, wear) + pieceCard("avoid", p.id, avoid) + '</div>' +
+      '</section>';
     }).join("");
-    return '<section class="wrap reveal"><ul class="char-grid">' + items + '</ul></section>';
+    return '<section class="wrap rs-pieces-intro reveal">' +
+      '<span class="kicker">What to wear for your shape</span>' +
+      '<h2 class="section-h">A few pieces to start with</h2>' +
+      '<p class="section-lead">For each one: what tends to flatter your ' + esc(s.name.toLowerCase()) + ' shape, and what to approach with care. Your emailed guide covers every category in full.</p>' +
+    '</section>' + secs;
   }
 
-  function annotatedSection() {
-    var dots = s.annotations.map(function (a, i) {
-      return '<circle cx="' + a.anchor.x + '" cy="' + a.anchor.y + '" r="7.5" fill="var(--color-neutral-100)" stroke="currentColor" stroke-width="1.5"/>' +
-        '<text x="' + a.anchor.x + '" y="' + (a.anchor.y + 3.4) + '" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor">' + (i + 1) + '</text>';
-    }).join("");
-    var list = s.annotations.map(function (a, i) {
-      return '<li class="anno"><span class="anno-n">' + ("0" + (i + 1)) + '</span><div><h3 class="anno-t">' + esc(a.title) + '</h3><p class="anno-d">' + esc(a.description) + '</p></div></li>';
-    }).join("");
-    return '<section class="wrap reveal">' +
-      '<span class="kicker">The proportions behind it</span>' +
-      '<h2 class="section-h">What makes you ' + s.article + ' ' + esc(s.name) + '?</h2>' +
-      '<p class="section-lead">Your body shape is determined by the visual relationship between your shoulders, waist and hips — not by your size or weight.</p>' +
-      '<div class="anno-stage">' +
-        '<div class="anno-figure">' + silhouette(dots) + '</div>' +
-        '<ol class="anno-list">' + list + '</ol>' +
-      '</div>' +
-    '</section>';
-  }
-
-  function goalSection() {
-    var w = s.workWith.map(function (t) { return '<li>' + tick + '<span>' + esc(t) + '</span></li>'; }).join("");
-    var c = s.beCareful.map(function (t) { return '<li><span class="dot-warn"></span><span>' + esc(t) + '</span></li>'; }).join("");
-    return '<section class="wrap reveal">' +
-      '<div class="goal-card">' +
-        '<span class="kicker on-accent">Your main styling goal</span>' +
-        '<p class="goal-rule">' + esc(s.stylingGoal) + '</p>' +
-      '</div>' +
-      '<div class="goal-cols">' +
-        '<div class="goal-col"><h3 class="goal-col-h">Work with your shape</h3><ul class="goal-list work">' + w + '</ul></div>' +
-        '<div class="goal-col"><h3 class="goal-col-h">Be careful with</h3><ul class="goal-list careful">' + c + '</ul></div>' +
-      '</div>' +
-    '</section>';
-  }
-
-  function avoidSection() {
-    var cats = CAT_ORDER.map(function (catId) {
-      var items = (s.avoid[catId] || []).map(function (it, i) {
-        // supply an asset later by adding `image: "images/body-shapes/…"` to the item
-        var realSrc = it.image ? (BASE + it.image) : "";
-        var alt = "Illustration of a " + it.name.toLowerCase() + " on " + s.article + " " + s.name.toLowerCase() + " silhouette";
-        return '<article class="avoid-card">' +
-          editorialImage(realSrc, alt, catId, "4 / 5") +
-          '<div class="avoid-body"><span class="avoid-flag">Be careful with</span>' +
-          '<h4 class="avoid-name">' + esc(it.name) + '</h4>' +
-          '<p class="avoid-expl">' + esc(it.explanation) + '</p></div>' +
-        '</article>';
-      }).join("");
-      return '<div class="avoid-cat reveal"><h3 class="avoid-cat-h">' + esc(CAT_TITLE[catId]) + ' to be careful with</h3>' +
-        '<p class="avoid-cat-intro">' + esc(CAT_INTRO[catId]) + '</p>' +
-        '<div class="avoid-grid">' + items + '</div></div>';
-    }).join("");
-    return '<section class="wrap">' +
-      '<span class="kicker reveal">A useful preview</span>' +
-      '<h2 class="section-h reveal">Styles that can work against your shape</h2>' +
-      '<p class="section-lead reveal">These pieces are not forbidden. They are simply more likely to interrupt the balance or definition that naturally flatters your proportions.</p>' +
-      '<div class="avoid-cats">' + cats + '</div>' +
-    '</section>';
-  }
-
-  function guideTransitionSection() {
-    return '<section class="wrap guide-transition reveal">' +
-      '<div class="gt-copy">' +
-        '<span class="kicker">This is only the beginning</span>' +
-        '<h2 class="section-h">Now imagine knowing exactly what to choose in every clothing category</h2>' +
-        '<p class="section-lead">Your result gives you the foundation. The complete guide turns that foundation into a practical system you can use while shopping, building outfits and reviewing what is already in your wardrobe.</p>' +
-      '</div>' +
-      '<div class="gt-cover">' +
-        '<div class="mockup"><div class="mockup-back"></div><div class="mockup-back mockup-back-2"></div>' +
-          '<figure class="mockup-cover"><span class="mc-kicker">The Complete Guide</span>' +
-          '<div><h3 class="mc-title">Dressing for<span class="script">Your Shape</span></h3><span class="mc-rule"></span></div>' +
-          '<div><div class="mc-byline">Rita Rouhana</div><div class="mc-sub">Image &amp; Style</div></div></figure>' +
-        '</div>' +
-      '</div>' +
-    '</section>';
-  }
-
-  function guideContentsSection() {
-    var groups = GUIDE_GROUPS.map(function (g) {
-      var lis = g.items.map(function (it) {
-        var parts = it.split(" — ");
-        var extra = parts[1] ? '<span class="gc-flag">' + esc(parts[1]) + '</span>' : "";
-        return '<li>' + tick + '<span>' + esc(parts[0]) + extra + '</span></li>';
-      }).join("");
-      return '<div class="gc-group"><h3 class="gc-group-h">' + esc(g.title) + '</h3><ul class="gc-list">' + lis + '</ul></div>';
-    }).join("");
-    return '<section class="wrap reveal">' +
-      '<span class="kicker">Inside the full guide</span>' +
-      '<h2 class="section-h">Everything inside your complete ' + esc(s.name) + ' style guide</h2>' +
-      '<div class="gc-groups">' + groups + '</div>' +
-      '<p class="gc-value">More than 40 visual clothing recommendations tailored to your shape.</p>' +
-    '</section>';
-  }
-
-  function transformationSection() {
-    var items = TRANSFORM.map(function (t) { return '<li>' + tick + '<span>' + esc(t) + '</span></li>'; }).join("");
-    return '<section class="wrap reveal">' +
-      '<h2 class="section-h">Get dressed without second-guessing every choice</h2>' +
-      '<ul class="transform-grid">' + items + '</ul>' +
-      '<p class="section-lead" style="margin-top:clamp(20px,3vw,28px)">The goal is not to restrict your style. It is to give you a clear foundation so you can make more confident decisions and adapt trends to your own body.</p>' +
-    '</section>';
-  }
-
-  function finalCtaSection() {
+  // 4) Pitch the complete guide (PDF arrives by email)
+  function pitchSection() {
     return '<section class="wrap reveal"><div class="final-cta">' +
-      '<h2>Your shape is only the starting point</h2>' +
-      '<p>Get the complete guide and learn which cuts, shapes and details are most likely to work with your proportions across your entire wardrobe.</p>' +
-      '<a class="btn btn-buy" href="' + esc(checkout) + '" data-analytics="final-guide-cta" data-cta="final">Get my complete style guide</a>' +
-      '<p class="final-cta-note">Created specifically for the ' + esc(s.name) + ' silhouette.</p>' +
+      '<span class="kicker on-accent" style="margin-bottom:12px">Your complete guide</span>' +
+      '<h2>Everything for your ' + esc(s.name) + ' shape, in one place</h2>' +
+      '<p>Dozens of recommendations across necklines, sleeves, tops, jackets, coats, trousers, jeans, skirts, shorts and dresses — what to choose, what to skip, and the reason behind each, built for your ' + esc(s.name.toLowerCase()) + ' proportions.</p>' +
+      '<a class="btn btn-buy" href="' + esc(checkout) + '" data-analytics="final-guide-cta" data-cta="final">Get my complete guide — $47</a>' +
+      '<p class="final-cta-note">Your starter guide is on its way to your inbox.</p>' +
     '</div></section>';
   }
 
@@ -247,11 +186,9 @@
   }
 
   root.innerHTML =
-    heroSection() + characteristicsSection() + annotatedSection() + goalSection() +
-    avoidSection() + guideTransitionSection() + guideContentsSection() +
-    transformationSection() + finalCtaSection() + footerSection() + stickyCta();
+    summarySection() + vslSection() + piecesSection() + pitchSection() + footerSection() + stickyCta();
 
-  // page title (one h1 already in hero)
+  // page title (one h1 already in the summary)
   try { document.title = "You’re " + s.article + " " + s.name + " — Dressing for Your Shape | Rita Rouhana"; } catch (e) {}
 
   // ── analytics ──
@@ -295,7 +232,7 @@
 
   // ── sticky mobile CTA: appears past the hero, hides over the final CTA ──
   var sticky = document.getElementById("sticky-cta");
-  var hero = root.querySelector(".result-hero2");
+  var hero = root.querySelector(".rs-summary");
   var finalCta = root.querySelector(".final-cta");
   var footer = root.querySelector(".result-foot");
   if (sticky && hero && finalCta && "IntersectionObserver" in window) {

@@ -19,5 +19,11 @@ window.RITA_CONFIG = {
 
   // Where the "$47 — Get the full guide" button sends people
   // (Stripe Payment Link, Gumroad, ThriveCart, …). Leave "#" until it's ready.
-  checkoutUrl: "#"
+  checkoutUrl: "#",
+
+  // Short sales video (VSL) shown on the result page. Paste a YouTube, Vimeo
+  // or direct .mp4 URL. Leave "" to show a tasteful "video coming soon" slot.
+  // One video for every shape; to use a different video per shape instead,
+  // add `videoUrl: "…"` to that shape in shapes-data.js (it wins over this).
+  vslUrl: ""
 };

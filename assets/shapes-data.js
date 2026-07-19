@@ -37,6 +37,11 @@ window.SHAPES = {
       "Drop-waist styles that shift the eye off your waist"
     ],
     generalCaution: "Very boxy or oversized pieces can hide the waist and reduce the definition that characterises the silhouette.",
+    wear: {
+      necklines: { name: "V-neck or scoop", explanation: "Opens the upper body and echoes your curves, keeping the eye moving down toward your waist." },
+      trousers: { name: "High-waisted straight or wide-leg", explanation: "Sits at your natural waist and falls in a long, clean line that follows your shape." },
+      dresses: { name: "Wrap or belted dress", explanation: "Marks your waist and skims your curves — the most flattering line for your shape." }
+    },
     avoid: {
       necklines: [
         { name: "High funnel neck", explanation: "Closes off the upper body and can flatten the open, balanced line that softer necklines create." },
@@ -90,6 +95,11 @@ window.SHAPES = {
       "Clingy fabrics through the lower half"
     ],
     generalCaution: "Extra volume, strong details or horizontal emphasis around the hips can make the lower half appear visually heavier.",
+    wear: {
+      necklines: { name: "Boat or embellished neckline", explanation: "Adds width and interest across the shoulders to balance your fuller hips." },
+      trousers: { name: "Dark straight or bootcut trousers", explanation: "Skim past the hip and thigh and lengthen the whole lower half." },
+      dresses: { name: "Fit-and-flare / A-line dress", explanation: "Defines your waist and glides over the hips instead of clinging to them." }
+    },
     avoid: {
       necklines: [
         { name: "Narrow scoop close to the neck", explanation: "Keeps the shoulder line narrow when the aim is to broaden it a little." },
@@ -143,6 +153,11 @@ window.SHAPES = {
       "Pieces that simply repeat your vertical line"
     ],
     generalCaution: "Very straight, shapeless pieces can repeat the body's vertical lines without creating any waist or dimensional contrast.",
+    wear: {
+      necklines: { name: "Sweetheart or cowl neckline", explanation: "Adds softness and curve up top where the frame reads straight." },
+      trousers: { name: "Paperbag or wide-leg with a defined waist", explanation: "Cinches in a waist and builds shape into a straight line." },
+      dresses: { name: "Belted or peplum dress", explanation: "Carves out a waist and adds the dimension a straight frame thrives on." }
+    },
     avoid: {
       necklines: [
         { name: "Plain high crew", explanation: "Adds another straight line to a naturally straight frame." },
@@ -196,6 +211,11 @@ window.SHAPES = {
       "Slim, plain bottoms that keep the base narrow"
     ],
     generalCaution: "Strong shoulder details, high-volume sleeves or wide upper-body lines can exaggerate the difference between the shoulders and hips.",
+    wear: {
+      necklines: { name: "V-neck or scoop", explanation: "Softens and narrows the shoulder line, drawing the eye inward and down." },
+      trousers: { name: "Wide-leg, pleated or printed trousers", explanation: "Adds welcome volume to the lower half to balance broader shoulders." },
+      dresses: { name: "A-line or full-skirt dress", explanation: "Builds shape below the waist so top and bottom read in balance." }
+    },
     avoid: {
       necklines: [
         { name: "Wide boat neck", explanation: "Extends the shoulder line and emphasises an already-broad upper body." },
@@ -249,6 +269,11 @@ window.SHAPES = {
       "Pieces that end at the widest part of the torso"
     ],
     generalCaution: "Clingy fabrics, bulky waist details or pieces that end at the widest part of the torso can concentrate attention around the midsection.",
+    wear: {
+      necklines: { name: "Deep V or open neckline", explanation: "Draws the eye up and lengthens the torso into one long line." },
+      trousers: { name: "Straight-leg, flat-front trousers", explanation: "Keep a clean, uninterrupted line from waist to hem." },
+      dresses: { name: "Empire-line or soft A-line dress", explanation: "Falls from above the waist and skims the midsection in one clean sweep." }
+    },
     avoid: {
       necklines: [
         { name: "High, tight crew", explanation: "Shortens the neckline and closes off the long vertical line." },
