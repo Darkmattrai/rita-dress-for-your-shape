@@ -80,10 +80,10 @@
 
   [slSh, slWa, slHi].forEach(function (s) { s.addEventListener("input", draw); });
 
+  var stepLabelEl = document.getElementById("quiz-steplabel");
   function renderProgress() {
-    var html = "";
-    for (var i = 1; i <= TOTAL; i++) html += '<span class="dot' + (i <= current ? " on" : "") + '"></span>';
-    progressEl.innerHTML = html;
+    if (progressEl) progressEl.style.width = Math.round((current / TOTAL) * 100) + "%";
+    if (stepLabelEl) stepLabelEl.textContent = "Step " + current + " of " + TOTAL;
   }
 
   // numeric "nudge" shown on the final step — a personalised read-out of the
