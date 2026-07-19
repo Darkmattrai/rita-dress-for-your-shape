@@ -38,16 +38,37 @@
     return '<svg viewBox="0 0 120 200" fill="none" aria-hidden="true" style="width:100%;height:auto;display:block">' +
       '<circle cx="60" cy="26" r="13" fill="currentColor"/><path d="' + s.path + '" fill="currentColor"/>' + dots + '</svg>';
   }
-  // labelled placeholder that becomes the real illustration the moment an asset
-  // is dropped at its path — no code change needed.
-  // Renders a labelled placeholder. If `realSrc` is set (a supplied asset),
-  // it loads that image over the placeholder — so adding an asset is a
-  // one-line data change and, until then, the console stays clean.
-  function editorialImage(realSrc, alt, label, ratio) {
+  // Minimal garment line-art, keyed by clothing category. Used as a finished-
+  // looking illustration placeholder until a real asset is supplied.
+  var GARMENT_ART = {
+    necklines:
+      '<path d="M31 47 C38 40 44 38 50 38 C56 38 62 40 69 47 L69 104 L31 104 Z"/>' +
+      '<path d="M40 40 C44 51 56 51 60 40"/>' +
+      '<path d="M31 47 L21 55 L27 67"/><path d="M69 47 L79 55 L73 67"/>',
+    trousers:
+      '<path d="M33 30 L67 30 L65 104 L53 104 L50 60 L47 104 L35 104 Z"/>' +
+      '<path d="M33 39 L67 39"/>',
+    jackets:
+      '<path d="M30 43 L40 34 L60 34 L70 43 L72 104 L28 104 Z"/>' +
+      '<path d="M40 34 L48 62 L50 44 L52 62 L60 34"/>' +
+      '<path d="M48 62 L47 104"/><path d="M52 62 L53 104"/>',
+    shirts:
+      '<path d="M31 45 C38 38 44 37 50 37 C56 37 62 38 69 45 L69 104 L31 104 Z"/>' +
+      '<path d="M44 40 L50 47 L56 40"/><path d="M50 47 L50 104"/>' +
+      '<path d="M31 45 L22 53 L26 79"/><path d="M69 45 L78 53 L74 79"/>',
+    dresses:
+      '<path d="M41 37 C45 34 55 34 59 37 L56 60 L74 104 L26 104 L44 60 Z"/>' +
+      '<path d="M45 37 C48 42 52 42 55 37"/><path d="M44 60 L56 60"/>'
+  };
+
+  // Finished-looking editorial illustration. Until a real asset is dropped in
+  // (add `image:` to the item in shapes-data.js), it shows a soft garment
+  // line-art for the category; the asset then loads over it — no code change.
+  function editorialImage(realSrc, alt, catId, ratio) {
     var img = realSrc ? '<img alt="' + esc(alt) + '" data-src="' + esc(realSrc) + '" loading="lazy" />' : "";
     return '<figure class="ed-img" style="aspect-ratio:' + ratio + '">' +
-      '<span class="ed-ph"><span class="ed-ph-label">' + esc(label) + '</span>' +
-      '<span class="ed-ph-note">Recommended: transparent ' + ratio.replace(/\s/g, "") + ' asset</span></span>' +
+      '<span class="ed-ph"><svg class="ed-art" viewBox="0 0 100 125" fill="none" aria-hidden="true">' +
+        (GARMENT_ART[catId] || GARMENT_ART.necklines) + '</svg></span>' +
       img +
     '</figure>';
   }
@@ -139,10 +160,9 @@
       var items = (s.avoid[catId] || []).map(function (it, i) {
         // supply an asset later by adding `image: "images/body-shapes/…"` to the item
         var realSrc = it.image ? (BASE + it.image) : "";
-        var label = CAT_TITLE[catId].toUpperCase() + " — AVOID 0" + (i + 1);
         var alt = "Illustration of a " + it.name.toLowerCase() + " on " + s.article + " " + s.name.toLowerCase() + " silhouette";
         return '<article class="avoid-card">' +
-          editorialImage(realSrc, alt, label, "4 / 5") +
+          editorialImage(realSrc, alt, catId, "4 / 5") +
           '<div class="avoid-body"><span class="avoid-flag">Be careful with</span>' +
           '<h4 class="avoid-name">' + esc(it.name) + '</h4>' +
           '<p class="avoid-expl">' + esc(it.explanation) + '</p></div>' +
