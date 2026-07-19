@@ -107,22 +107,12 @@
   // ── build sections (Headline → Sub-headline → VSL → CTA → mockup →
   //    full description → final CTA). Free styling detail ships as the PDF. ──
 
-  // 1 + 2) Headline + sub-headline (personalised to the shape)
+  // 1) Headline (personalised) — the shape-summary detail now lives in the PDF
   function headlineSection() {
-    var chars = s.characteristics.map(function (c) {
-      return '<li>' + tick + '<span>' + esc(c) + '</span></li>';
-    }).join("");
-    return '<header class="wrap rs-summary reveal">' +
-      '<div class="rs-summary-copy">' +
-        '<span class="result-eyebrow">Your body-shape result</span>' +
-        '<h1 class="result-title">You’re ' + s.article + ' <span class="accent">' + esc(s.name) + '</span></h1>' +
-        '<p class="result-summary">' + esc(s.heroSummary) + '</p>' +
-        '<div class="rs-what"><ul class="rs-char">' + chars + '</ul></div>' +
-      '</div>' +
-      '<div class="rs-figure">' +
-        '<span class="result-badge"><span class="rb-label">Your shape</span><span class="rb-name">' + esc(s.name) + '</span></span>' +
-        '<div class="figure-sil">' + silhouette() + '</div>' +
-      '</div>' +
+    return '<header class="wrap rs-headline reveal">' +
+      '<span class="result-eyebrow">Your body-shape result</span>' +
+      '<h1 class="result-title">You’re ' + s.article + ' <span class="accent">' + esc(s.name) + '</span></h1>' +
+      '<div class="rs-headline-fig figure-sil">' + silhouette() + '</div>' +
     '</header>';
   }
 
@@ -256,7 +246,7 @@
 
   // ── sticky mobile CTA: appears past the hero, hides over the final CTA ──
   var sticky = document.getElementById("sticky-cta");
-  var hero = root.querySelector(".rs-summary");
+  var hero = root.querySelector(".rs-headline");
   var finalCta = root.querySelector(".final-cta");
   var footer = root.querySelector(".result-foot");
   if (sticky && hero && finalCta && "IntersectionObserver" in window) {
