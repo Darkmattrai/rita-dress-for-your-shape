@@ -25,5 +25,21 @@ window.RITA_CONFIG = {
   // or direct .mp4 URL. Leave "" to show a tasteful "video coming soon" slot.
   // One video for every shape; to use a different video per shape instead,
   // add `videoUrl: "…"` to that shape in shapes-data.js (it wins over this).
-  vslUrl: ""
+  vslUrl: "",
+
+  // ── VSL funnel (vsl.html → survey.html → calendar.html → thank-you.html) ──
+  // The main training video on the VSL page (YouTube / Vimeo / .mp4).
+  vslFunnelUrl: "",
+
+  // Seconds to wait before the CTA button appears under the VSL (a common
+  // VSL tactic). 0 = show it straight away.
+  vslCtaDelay: 0,
+
+  // Embedded survey / application (Typeform, agenci form, Tally, …). The
+  // survey page drops this in an <iframe>. Leave "" for a placeholder.
+  surveyUrl: "",
+
+  // Embedded booking calendar (Calendly, TidyCal, agenci, …). The calendar
+  // page drops this in an <iframe>. Leave "" for a placeholder.
+  calendarUrl: ""
 };
