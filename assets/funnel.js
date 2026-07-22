@@ -70,6 +70,13 @@
 
   var page = document.body.getAttribute("data-funnel") || "funnel";
 
+  // ── Checkout links ($47 guide sales page) ──
+  var checkout = (cfg.checkoutUrl && cfg.checkoutUrl !== "#") ? cfg.checkoutUrl : "";
+  document.querySelectorAll("[data-checkout]").forEach(function (a) {
+    if (checkout) a.setAttribute("href", checkout);
+    else a.addEventListener("click", function (e) { e.preventDefault(); });
+  });
+
   // ── Calendar embed (calendar.html) ──
   embed(document.getElementById("calendar-embed"), cfg.calendarUrl, "Your booking calendar");
 
