@@ -31,7 +31,7 @@
     <section class="fn-video">
       <div class="vsl-frame" id="vsl-video"></div>
       <div class="fn-cta-row">
-        <a class="btn btn-cta" href="survey.html" data-cta-gate data-analytics="vsl-cta-primary">Book my free style call</a>
+        <button type="button" class="btn btn-cta" data-open-survey data-cta-gate data-analytics="vsl-cta-primary">Book my free style call</button>
         <p class="fn-note" id="vsl-cta-note" hidden>Keep watching — the button appears in a moment.</p>
         <p class="fn-microcopy">Free 30-minute call · No obligation</p>
       </div>
@@ -67,7 +67,7 @@
         <li><span class="ln"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>The simple wardrobe system that makes getting dressed a 2-minute decision.</span></li>
         <li><span class="ln"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>How to shop with a clear plan — and stop wasting money on pieces you never wear.</span></li>
       </ul>
-      <div class="fn-cta-row"><a class="btn btn-cta" href="survey.html" data-analytics="vsl-cta-learn">Book my free style call</a></div>
+      <div class="fn-cta-row"><button type="button" class="btn btn-cta" data-open-survey data-analytics="vsl-cta-learn">Book my free style call</button></div>
     </section>
 
     <!-- Social proof (placeholders — add Rita's real client stories) -->
@@ -86,7 +86,7 @@
       <div class="fn-band">
         <h2>Ready to feel put-together every single morning?</h2>
         <p>Book your free 30-minute style call. We'll look at where your wardrobe is getting stuck and map out your next step — no obligation, no pressure.</p>
-        <a class="btn btn-cta" href="survey.html" data-analytics="vsl-cta-final">Book my free style call</a>
+        <button type="button" class="btn btn-cta" data-open-survey data-analytics="vsl-cta-final">Book my free style call</button>
         <p class="sub">Limited spots each week · 100% free</p>
       </div>
     </section>
@@ -97,6 +97,27 @@
     <p class="fn-disc">Results vary from person to person and depend on your own effort, wardrobe and starting point. This masterclass is educational and makes no guarantee of a specific outcome.</p>
     <p class="copy">© Rita Rouhana · Image &amp; Style</p>
   </footer>
+
+  <!-- Survey popup: opened by the CTAs. funnel.js drops the survey embed
+       (RITA_CONFIG.surveyUrl) into #survey-embed; a qualified finish sends
+       the visitor to the calendar page. -->
+  <div id="survey-modal" class="fn-modal" hidden data-modal-close>
+    <div class="fn-modal-card" role="dialog" aria-modal="true" aria-labelledby="survey-modal-title">
+      <button type="button" class="fn-modal-x" data-modal-close aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <div class="fn-modal-head">
+        <span class="fn-flag"><span class="dot"></span> Step 1 of 3 · Apply</span>
+        <h2 id="survey-modal-title">A few quick questions first</h2>
+        <p>So Rita can make your free call genuinely useful, tell her a little about you and your wardrobe. It takes about two minutes.</p>
+      </div>
+      <div class="embed-frame" id="survey-embed"></div>
+      <div class="fn-cta-row">
+        <a class="btn btn-cta" href="calendar.html" data-survey-continue data-analytics="survey-continue">Continue to booking</a>
+        <p class="fn-microcopy">Your answers stay private</p>
+      </div>
+    </div>
+  </div>
 
   <script src="assets/funnel.js"></script>
 </body>

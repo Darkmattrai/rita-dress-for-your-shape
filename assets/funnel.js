@@ -68,12 +68,46 @@
     }
   }
 
-  // ── Survey + calendar embeds ──
-  embed(document.getElementById("survey-embed"), cfg.surveyUrl, "Your application survey");
+  var page = document.body.getAttribute("data-funnel") || "funnel";
+
+  // ── Calendar embed (calendar.html) ──
   embed(document.getElementById("calendar-embed"), cfg.calendarUrl, "Your booking calendar");
 
+  // ── Survey popup (vsl.html) — the CTA opens a modal with the survey ──
+  var surveyModal = document.getElementById("survey-modal");
+  if (surveyModal) {
+    var surveyFilled = false, lastFocus = null;
+    var openSurvey = function () {
+      lastFocus = document.activeElement;
+      if (!surveyFilled) { embed(document.getElementById("survey-embed"), cfg.surveyUrl, "Your application survey"); surveyFilled = true; }
+      surveyModal.hidden = false;
+      document.body.style.overflow = "hidden";
+    };
+    var closeSurvey = function () {
+      surveyModal.hidden = true;
+      document.body.style.overflow = "";
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+    document.querySelectorAll("[data-open-survey]").forEach(function (b) { b.addEventListener("click", openSurvey); });
+    surveyModal.querySelectorAll("[data-modal-close]").forEach(function (el) {
+      el.addEventListener("click", function (e) { if (e.currentTarget === el) closeSurvey(); });
+    });
+    var card = surveyModal.querySelector(".fn-modal-card");
+    if (card) card.addEventListener("click", function (e) { e.stopPropagation(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !surveyModal.hidden) closeSurvey(); });
+
+    // Qualified finish → book a call. The embedded survey signals this by
+    // redirecting its parent to calendar.html, or by posting a message we
+    // recognise here; disqualified visitors are handled inside the survey.
+    window.addEventListener("message", function (e) {
+      var d = e.data;
+      if (d === "rita:qualified" || (d && (d.qualified === true || d.rita === "qualified"))) {
+        window.location.href = "calendar.html";
+      }
+    });
+  }
+
   // ── analytics: page view + CTA clicks ──
-  var page = document.body.getAttribute("data-funnel") || "funnel";
   if (window.ritaTrack) window.ritaTrack("funnel_view", { page: page });
   document.querySelectorAll("[data-analytics]").forEach(function (el) {
     el.addEventListener("click", function () {

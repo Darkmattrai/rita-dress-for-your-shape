@@ -93,6 +93,20 @@
 .embed-ph-t { font-family: var(--font-heading); font-size: clamp(20px, 2.6vw, 26px); color: var(--color-accent); }
 .embed-ph-s { font-size: 13.5px; color: color-mix(in srgb, var(--color-text) 60%, transparent); }
 
+/* survey popup (on the VSL page) */
+@keyframes fn-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fn-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.fn-modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: flex-start; justify-content: center; padding: clamp(16px, 4vw, 48px) 16px; background: color-mix(in srgb, var(--color-neutral-900) 55%, transparent); overflow-y: auto; animation: fn-fade 0.2s ease; }
+.fn-modal[hidden] { display: none; }
+.fn-modal-card { position: relative; width: 100%; max-width: 720px; background: var(--color-neutral-100); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: clamp(26px, 4vw, 44px); animation: fn-rise 0.28s ease; }
+.fn-modal-x { position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--color-divider); background: transparent; color: var(--color-text); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.fn-modal-x:hover { background: var(--color-accent-100); border-color: transparent; }
+.fn-modal-head { text-align: center; margin-bottom: 18px; }
+.fn-modal-head h2 { font-family: var(--font-heading); font-weight: 400; font-size: clamp(24px, 3.4vw, 34px); line-height: 1.1; margin: 12px 0 0; }
+.fn-modal-head p { font-size: 15.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 78%, transparent); margin: 10px auto 0; max-width: 46ch; }
+.fn-modal .embed-frame, .fn-modal .embed-ph { min-height: 480px; }
+.fn-modal .fn-cta-row { margin-top: 20px; }
+
 /* step indicator (survey / calendar) */
 .fn-steps { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 4px 0 clamp(20px, 3vw, 30px); }
 .fn-steps .st { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 45%, transparent); }
